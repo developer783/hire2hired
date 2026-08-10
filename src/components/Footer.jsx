@@ -180,7 +180,7 @@ export default function Footer({ onRequestCallback, onNavigate }) {
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-400 no-underline">Privacy Policy</a>
+            <a href="#privacy" onClick={(e) => handleNav(e, 'privacy')} className="hover:text-slate-400 no-underline">Privacy Policy</a>
             <a href="#terms" onClick={(e) => handleNav(e, 'terms')} className="hover:text-slate-400 no-underline">Terms of Service</a>
             <a href="#careers" onClick={(e) => handleNav(e, 'careers')} className="hover:text-slate-400 no-underline">Careers</a>
           </div>

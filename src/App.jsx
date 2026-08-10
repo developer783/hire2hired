@@ -29,6 +29,7 @@ import ConsultantServicesPage from './components/ConsultantServicesPage';
 import ConsultantsOverviewPage from './components/ConsultantsOverviewPage';
 import ConsultantHowItWorksPage from './components/ConsultantHowItWorksPage';
 import TermsOfServicePage from './components/TermsOfServicePage';
+import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import SignupPage from './components/SignupPage';
 import StripePaymentView from './components/StripePaymentView';
 import ConsultantLoginPage from './components/ConsultantLoginPage';
@@ -176,6 +177,9 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#terms' || hash === '#terms-of-service') {
         setCurrentView('terms');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#privacy' || hash === '#privacy-policy') {
+        setCurrentView('privacy');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#home' || hash === '') {
         setCurrentView('home');
@@ -366,6 +370,11 @@ export default function App() {
           />
         ) : currentView === 'terms' ? (
           <TermsOfServicePage 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'privacy' ? (
+          <PrivacyPolicyPage 
             onNavigate={handleNavigate}
             isFullPage={true}
           />
