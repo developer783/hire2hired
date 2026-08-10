@@ -13,6 +13,34 @@ export default function ConsultantLoginPage({ onNavigate, isFullPage = true }) {
 
   const [authError, setAuthError] = useState(null);
 
+  const fetchGoogleProfile = (token) => {
+    setLoading(true);
+    fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(data => {
+      setLoading(false);
+      if (data.error) {
+        setAuthError(data.error_description || 'Failed to fetch user profile from Google.');
+        return;
+      }
+      const userObj = {
+        name: data.name || data.given_name || data.email.split('@')[0],
+        email: data.email,
+        avatar: data.picture,
+        provider: 'Google OAuth 2.0'
+      };
+      setAuthUser(userObj);
+      setLoggedIn(true);
+      localStorage.setItem('hire2hired_user', JSON.stringify(userObj));
+    })
+    .catch((err) => {
+      setLoading(false);
+      setAuthError('Failed to connect to Google UserInfo API: ' + err.message);
+    });
+  };
+
   // Check for returned OAuth tokens or active session on mount
   useEffect(() => {
     const hash = window.location.hash;
@@ -31,32 +59,7 @@ export default function ConsultantLoginPage({ onNavigate, isFullPage = true }) {
       const params = new URLSearchParams(hash.replace('#login', '').replace('#', '?'));
       const token = params.get('access_token');
       if (token) {
-        setLoading(true);
-        // Call Google's official userinfo API to get real Google user profile
-        fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        .then(res => res.json())
-        .then(data => {
-          setLoading(false);
-          if (data.error) {
-            setAuthError(data.error_description || 'Failed to fetch user profile from Google.');
-            return;
-          }
-          const userObj = {
-            name: data.name || data.given_name || data.email.split('@')[0],
-            email: data.email,
-            avatar: data.picture,
-            provider: 'Google OAuth 2.0'
-          };
-          setAuthUser(userObj);
-          setLoggedIn(true);
-          localStorage.setItem('hire2hired_user', JSON.stringify(userObj));
-        })
-        .catch((err) => {
-          setLoading(false);
-          setAuthError('Failed to connect to Google UserInfo API: ' + err.message);
-        });
+        fetchGoogleProfile(token);
       }
     } else {
       // Check saved localStorage session
@@ -90,14 +93,54 @@ export default function ConsultantLoginPage({ onNavigate, isFullPage = true }) {
 
   const handleGoogleOAuth = () => {
     setAuthError(null);
-    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1084294829104-exampleclientid.apps.googleusercontent.com';
+    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+    // Validate that a real Client ID is supplied
+    if (!googleClientId || googleClientId.includes('exampleclientid')) {
+      setAuthError('Google Client ID is not configured. Please add your Google Cloud Client ID to the .env file: VITE_GOOGLE_CLIENT_ID=your_id.apps.googleusercontent.com');
+      return;
+    }
+
     const redirectUri = window.location.origin + '/#login';
     const scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
-    
-    // Launch Real Google OAuth 2.0 authorization endpoint
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(googleClientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent(scope)}&prompt=consent`;
-    
-    window.location.href = googleAuthUrl;
+
+    // Open Real Google Auth in Popup window
+    const width = 500;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    const popup = window.open(
+      googleAuthUrl,
+      'GoogleAuthPopup',
+      `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,status=yes`
+    );
+
+    if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+      window.location.href = googleAuthUrl;
+    } else {
+      const timer = setInterval(() => {
+        try {
+          if (popup.closed) {
+            clearInterval(timer);
+            return;
+          }
+          const popupHash = popup.location.hash;
+          if (popupHash && popupHash.includes('access_token=')) {
+            clearInterval(timer);
+            popup.close();
+            const params = new URLSearchParams(popupHash.replace('#login', '').replace('#', '?'));
+            const token = params.get('access_token');
+            if (token) {
+              fetchGoogleProfile(token);
+            }
+          }
+        } catch (e) {
+          // Cross-origin check pending popup redirect
+        }
+      }, 500);
+    }
   };
 
   const handleGitHubOAuth = () => {
