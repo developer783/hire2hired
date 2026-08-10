@@ -28,6 +28,7 @@ import EmployerServicesPage from './components/EmployerServicesPage';
 import ConsultantServicesPage from './components/ConsultantServicesPage';
 import ConsultantsOverviewPage from './components/ConsultantsOverviewPage';
 import ConsultantHowItWorksPage from './components/ConsultantHowItWorksPage';
+import TermsOfServicePage from './components/TermsOfServicePage';
 import SignupPage from './components/SignupPage';
 import StripePaymentView from './components/StripePaymentView';
 import ConsultantLoginPage from './components/ConsultantLoginPage';
@@ -172,6 +173,9 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#faq' || hash === '#faqs') {
         setCurrentView('faq');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#terms' || hash === '#terms-of-service') {
+        setCurrentView('terms');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#home' || hash === '') {
         setCurrentView('home');
@@ -358,6 +362,11 @@ export default function App() {
           <FAQPage 
             onNavigate={handleNavigate}
             onRequestCallback={handleOpenCallback}
+            isFullPage={true}
+          />
+        ) : currentView === 'terms' ? (
+          <TermsOfServicePage 
+            onNavigate={handleNavigate}
             isFullPage={true}
           />
         ) : (
