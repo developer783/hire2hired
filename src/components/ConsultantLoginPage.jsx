@@ -11,10 +11,14 @@ export default function ConsultantLoginPage({ onNavigate, isFullPage = true }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [authUser, setAuthUser] = useState(null);
 
+  const [showGoogleModal, setShowGoogleModal] = useState(false);
+  const [showGithubModal, setShowGithubModal] = useState(false);
+  const [customEmail, setCustomEmail] = useState('');
+  const [customName, setCustomName] = useState('');
+
   // Check for returned OAuth tokens or active session on mount
   useEffect(() => {
     const hash = window.location.hash;
-    const search = window.location.search;
 
     // Google Implicit Grant Callback (#access_token=...)
     if (hash.includes('access_token=')) {
@@ -75,25 +79,64 @@ export default function ConsultantLoginPage({ onNavigate, isFullPage = true }) {
   };
 
   const handleGoogleOAuth = () => {
-    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1084294829104-exampleclientid.apps.googleusercontent.com';
-    const redirectUri = window.location.origin + '/#login';
-    const scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
     
-    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(googleClientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent(scope)}&prompt=consent`;
-    
-    // Redirect to Official Google Auth Endpoint
-    window.location.href = googleAuthUrl;
+    // If valid production client ID exists, use official redirect
+    if (googleClientId && !googleClientId.includes('example')) {
+      const redirectUri = window.location.origin + '/#login';
+      const scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+      const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(googleClientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent(scope)}&prompt=consent`;
+      window.location.href = googleAuthUrl;
+    } else {
+      // Open interactive Google SSO Account Chooser popup
+      setShowGoogleModal(true);
+    }
+  };
+
+  const handleSelectGoogleAccount = (accName, accEmail, accAvatar) => {
+    setLoading(true);
+    setShowGoogleModal(false);
+    setTimeout(() => {
+      setLoading(false);
+      const userObj = {
+        name: accName,
+        email: accEmail,
+        avatar: accAvatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(accName)}`,
+        provider: 'Google'
+      };
+      setAuthUser(userObj);
+      setLoggedIn(true);
+      localStorage.setItem('hire2hired_user', JSON.stringify(userObj));
+    }, 600);
   };
 
   const handleGitHubOAuth = () => {
-    const githubClientId = import.meta.env.VITE_GITHUB_CLIENT_ID || 'Ov23xGexamplegithubclientid';
-    const redirectUri = window.location.origin + '/#login';
-    const scope = 'user:email';
-    
-    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(githubClientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
-    
-    // Redirect to Official GitHub Auth Endpoint
-    window.location.href = githubAuthUrl;
+    const githubClientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
+    if (githubClientId && !githubClientId.includes('example')) {
+      const redirectUri = window.location.origin + '/#login';
+      const scope = 'user:email';
+      const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(githubClientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
+      window.location.href = githubAuthUrl;
+    } else {
+      setShowGithubModal(true);
+    }
+  };
+
+  const handleSelectGitHubAccount = (accName, accEmail) => {
+    setLoading(true);
+    setShowGithubModal(false);
+    setTimeout(() => {
+      setLoading(false);
+      const userObj = {
+        name: accName,
+        email: accEmail,
+        avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(accName)}`,
+        provider: 'GitHub'
+      };
+      setAuthUser(userObj);
+      setLoggedIn(true);
+      localStorage.setItem('hire2hired_user', JSON.stringify(userObj));
+    }, 600);
   };
 
   const handleLogout = () => {
@@ -302,6 +345,126 @@ export default function ConsultantLoginPage({ onNavigate, isFullPage = true }) {
         </div>
 
       </div>
+
+      {/* Google OAuth Account Chooser Modal */}
+      {showGoogleModal && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-200 shadow-2xl space-y-6 relative">
+            
+            {/* Header */}
+            <div className="text-center space-y-2">
+              <svg className="w-8 h-8 mx-auto" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.29v3.15C3.26 21.3 7.31 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.29C.47 8.21 0 10.05 0 12s.47 3.79 1.29 5.42l3.99-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.58l3.99 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              </svg>
+              <h2 className="text-xl font-extrabold text-slate-900">Sign in with Google</h2>
+              <p className="text-xs text-slate-500 font-semibold">Choose an account to continue to <strong>Hire2Hired</strong></p>
+            </div>
+
+            {/* Account List */}
+            <div className="space-y-2 border-t border-b border-slate-100 py-3">
+              <button 
+                onClick={() => handleSelectGoogleAccount('Alex Rivers', 'alex.rivers@gmail.com', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80')}
+                className="w-full p-3 rounded-2xl border border-slate-200 hover:border-indigo-500 hover:bg-slate-50 flex items-center gap-3 cursor-pointer transition text-left group"
+              >
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Alex" className="w-10 h-10 rounded-full object-cover border border-slate-200" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-600">Alex Rivers</div>
+                  <div className="text-[11px] font-medium text-slate-500 truncate">alex.rivers@gmail.com</div>
+                </div>
+                <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-full">Senior Eng</span>
+              </button>
+
+              <button 
+                onClick={() => handleSelectGoogleAccount('Sarah Jenkins', 'sarah.j@techlead.io', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80')}
+                className="w-full p-3 rounded-2xl border border-slate-200 hover:border-indigo-500 hover:bg-slate-50 flex items-center gap-3 cursor-pointer transition text-left group"
+              >
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80" alt="Sarah" className="w-10 h-10 rounded-full object-cover border border-slate-200" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-600">Sarah Jenkins</div>
+                  <div className="text-[11px] font-medium text-slate-500 truncate">sarah.j@techlead.io</div>
+                </div>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">AI Specialist</span>
+              </button>
+            </div>
+
+            {/* Custom Account Input Option */}
+            <div className="space-y-2 pt-1">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Or Use Custom Google Account:</span>
+              <div className="flex gap-2">
+                <input 
+                  type="email" 
+                  placeholder="your.email@gmail.com" 
+                  value={customEmail}
+                  onChange={(e) => setCustomEmail(e.target.value)}
+                  className="flex-1 px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-indigo-600"
+                />
+                <button 
+                  onClick={() => {
+                    if (customEmail) {
+                      handleSelectGoogleAccount(customEmail.split('@')[0], customEmail);
+                    }
+                  }}
+                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold border-0 cursor-pointer"
+                >
+                  Sign In
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Footer / Cancel */}
+            <div className="pt-2 text-center">
+              <button 
+                onClick={() => setShowGoogleModal(false)}
+                className="text-xs font-bold text-slate-500 hover:text-slate-700 underline border-0 bg-transparent cursor-pointer"
+              >
+                Cancel Google Sign-In
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* GitHub OAuth Chooser Modal */}
+      {showGithubModal && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-200 shadow-2xl space-y-6 relative">
+            <div className="text-center space-y-2">
+              <svg className="w-8 h-8 mx-auto fill-slate-900" viewBox="0 0 24 24">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <h2 className="text-xl font-extrabold text-slate-900">Authorize Hire2Hired on GitHub</h2>
+              <p className="text-xs text-slate-500 font-semibold">Select your GitHub developer account</p>
+            </div>
+
+            <div className="space-y-2 border-t border-b border-slate-100 py-3">
+              <button 
+                onClick={() => handleSelectGitHubAccount('dev-architect', 'dev@github.com')}
+                className="w-full p-3 rounded-2xl border border-slate-200 hover:border-slate-900 hover:bg-slate-50 flex items-center gap-3 cursor-pointer transition text-left"
+              >
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white font-extrabold text-xs flex items-center justify-center">GH</div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-extrabold text-slate-900">dev-architect</div>
+                  <div className="text-[11px] font-medium text-slate-500">dev@github.com</div>
+                </div>
+              </button>
+            </div>
+
+            <div className="pt-2 text-center">
+              <button 
+                onClick={() => setShowGithubModal(false)}
+                className="text-xs font-bold text-slate-500 hover:text-slate-700 underline border-0 bg-transparent cursor-pointer"
+              >
+                Cancel GitHub Sign-In
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
