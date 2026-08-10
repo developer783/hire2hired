@@ -20,6 +20,14 @@ import BlogSection from './components/BlogSection';
 import ITServicesPage from './components/ITServicesPage';
 import CoursesPage from './components/CoursesPage';
 import ContactPage from './components/ContactPage';
+import BookConsultationPage from './components/BookConsultationPage';
+import EmployerLoginPage from './components/EmployerLoginPage';
+import EmployerHowItWorksPage from './components/EmployerHowItWorksPage';
+import SignupPage from './components/SignupPage';
+import StripePaymentView from './components/StripePaymentView';
+import ConsultantLoginPage from './components/ConsultantLoginPage';
+import WhyChooseUsPage from './components/WhyChooseUsPage';
+import CareersPage from './components/CareersPage';
 import useScrollAnimate from './hooks/useScrollAnimate';
 
 export default function App() {
@@ -42,6 +50,30 @@ export default function App() {
       }
       if (hash === '#contact') {
         return 'contact';
+      }
+      if (hash === '#bookconsultation' || hash === '#employers') {
+        return 'bookconsultation';
+      }
+      if (hash === '#employer-login' || hash === '#employers-login') {
+        return 'employer-login';
+      }
+      if (hash === '#employer-how-it-works' || hash === '#employers-how-it-works') {
+        return 'employer-how-it-works';
+      }
+      if (hash === '#signup') {
+        return 'signup';
+      }
+      if (hash === '#payment') {
+        return 'payment';
+      }
+      if (hash === '#login' || hash === '#consultant-login') {
+        return 'login';
+      }
+      if (hash === '#why-choose-us' || hash === '#about-why-choose-us') {
+        return 'why-choose-us';
+      }
+      if (hash === '#careers') {
+        return 'careers';
       }
     }
     return 'home';
@@ -68,6 +100,30 @@ export default function App() {
       } else if (hash === '#contact') {
         setCurrentView('contact');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#bookconsultation' || hash === '#employers') {
+        setCurrentView('bookconsultation');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#employer-login' || hash === '#employers-login') {
+        setCurrentView('employer-login');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#employer-how-it-works' || hash === '#employers-how-it-works') {
+        setCurrentView('employer-how-it-works');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#signup') {
+        setCurrentView('signup');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#payment') {
+        setCurrentView('payment');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#login' || hash === '#consultant-login') {
+        setCurrentView('login');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#why-choose-us' || hash === '#about-why-choose-us') {
+        setCurrentView('why-choose-us');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#careers') {
+        setCurrentView('careers');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#home' || hash === '') {
         setCurrentView('home');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -89,6 +145,22 @@ export default function App() {
       window.location.hash = 'courses';
     } else if (view === 'contact') {
       window.location.hash = 'contact';
+    } else if (view === 'bookconsultation' || view === 'employers') {
+      window.location.hash = 'bookconsultation';
+    } else if (view === 'employer-login') {
+      window.location.hash = 'employer-login';
+    } else if (view === 'employer-how-it-works') {
+      window.location.hash = 'employer-how-it-works';
+    } else if (view === 'signup') {
+      window.location.hash = 'signup';
+    } else if (view === 'payment') {
+      window.location.hash = 'payment';
+    } else if (view === 'login' || view === 'consultant-login') {
+      window.location.hash = 'login';
+    } else if (view === 'why-choose-us') {
+      window.location.hash = 'why-choose-us';
+    } else if (view === 'careers') {
+      window.location.hash = 'careers';
     } else {
       window.location.hash = 'home';
     }
@@ -143,12 +215,56 @@ export default function App() {
           <ContactPage 
             isFullPage={true}
           />
+        ) : currentView === 'bookconsultation' ? (
+          <BookConsultationPage 
+            onRequestCallback={handleOpenCallback} 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'employer-login' ? (
+          <EmployerLoginPage 
+            onNavigate={handleNavigate}
+            onRequestCallback={handleOpenCallback} 
+            isFullPage={true}
+          />
+        ) : currentView === 'employer-how-it-works' ? (
+          <EmployerHowItWorksPage 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'signup' ? (
+          <SignupPage 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'payment' ? (
+          <StripePaymentView 
+            isFullPage={true}
+            onNavigate={handleNavigate}
+          />
+        ) : currentView === 'login' ? (
+          <ConsultantLoginPage 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'why-choose-us' ? (
+          <WhyChooseUsPage 
+            onNavigate={handleNavigate}
+            onRequestCallback={handleOpenCallback}
+            isFullPage={true}
+          />
+        ) : currentView === 'careers' ? (
+          <CareersPage 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
         ) : (
           <>
             {/* Hero Section */}
             <HeroSection 
               onOpenApply={handleOpenApply} 
               onRequestCallback={handleOpenCallback}
+              onNavigate={handleNavigate}
             />
 
             {/* SECTION 1: Interactive AI Resume Analyzer (Immediately after Hero) */}

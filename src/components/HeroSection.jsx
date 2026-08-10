@@ -5,7 +5,7 @@ import {
   Calendar, Award, Check, ChevronRight, Briefcase, DollarSign
 } from 'lucide-react';
 
-export default function HeroSection({ onOpenApply, onRequestCallback }) {
+export default function HeroSection({ onOpenApply, onRequestCallback, onNavigate }) {
   // Active step state for 8-step hiring workflow sequence (0 to 7)
   const [activeStep, setActiveStep] = useState(0);
 
@@ -95,14 +95,14 @@ export default function HeroSection({ onOpenApply, onRequestCallback }) {
             {/* Two CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-1">
               <button 
-                onClick={() => onOpenApply('Find Talent')}
+                onClick={() => onNavigate ? onNavigate('signup') : onOpenApply('Find Talent')}
                 className="px-8 py-4 rounded-full btn-blue text-base font-extrabold flex items-center justify-center gap-2.5 border-0 cursor-pointer shadow-lg hover:scale-[1.02] transition-all"
               >
                 Find Talent <ArrowRight className="w-5 h-5" />
               </button>
 
               <button 
-                onClick={onRequestCallback}
+                onClick={() => onNavigate ? onNavigate('bookconsultation') : onRequestCallback()}
                 className="px-8 py-4 rounded-full btn-outline-warm text-base font-extrabold flex items-center justify-center gap-2.5 cursor-pointer hover:bg-slate-50 transition-all"
               >
                 Book a Consultation <ArrowRight className="w-5 h-5 text-slate-400" />

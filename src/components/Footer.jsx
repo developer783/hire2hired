@@ -46,33 +46,40 @@ export default function Footer({ onRequestCallback, onNavigate }) {
             </div>
           </div>
 
-          {/* Col 2: For Consultants */}
+          {/* Col 2: About Hire2Hired */}
+          <div>
+            <h4 className="font-bold text-white text-sm mb-4">About</h4>
+            <ul className="space-y-2.5 text-xs">
+              <li><a href="#our-story" onClick={(e) => handleNav(e, 'our-story')} className="hover:text-indigo-400 transition no-underline">Our Story</a></li>
+              <li><a href="#employer-how-it-works" onClick={(e) => handleNav(e, 'employer-how-it-works')} className="hover:text-indigo-400 transition no-underline">How It Works</a></li>
+              <li><a href="#why-choose-us" onClick={(e) => handleNav(e, 'why-choose-us')} className="hover:text-indigo-400 transition no-underline">Why Choose Us</a></li>
+              <li><a href="#careers" onClick={(e) => handleNav(e, 'careers')} className="hover:text-indigo-400 transition no-underline font-semibold text-slate-300">Careers</a></li>
+              <li><a href="#contact" onClick={(e) => handleNav(e, 'contact')} className="hover:text-indigo-400 transition no-underline">Contact Us</a></li>
+            </ul>
+          </div>
+
+          {/* Col 3: For Consultants */}
           <div>
             <h4 className="font-bold text-white text-sm mb-4">For Consultants</h4>
             <ul className="space-y-2.5 text-xs">
-              <li><a href="#our-story" onClick={(e) => handleNav(e, 'our-story')} className="hover:text-indigo-400 transition no-underline">Our Story</a></li>
+              <li><a href="#signup" onClick={(e) => handleNav(e, 'signup')} className="hover:text-indigo-400 transition no-underline">Consultant Signup</a></li>
               <li><a href="#blog" onClick={(e) => handleNav(e, 'blog')} className="hover:text-indigo-400 transition no-underline">Blog & Insights</a></li>
-              <li><a href="#services" className="hover:text-indigo-400 transition no-underline">Career Matching</a></li>
-              <li><a href="#services" className="hover:text-indigo-400 transition no-underline">Java & Enterprise Contracts</a></li>
-              <li><a href="#services" className="hover:text-indigo-400 transition no-underline">AI & Data Science Roles</a></li>
-              <li><a href="#services" className="hover:text-indigo-400 transition no-underline">Cloud & DevOps Contracts</a></li>
-              <li><a href="#how-it-works" className="hover:text-indigo-400 transition no-underline">Resume & Interview Prep</a></li>
+              <li><a href="#services" onClick={(e) => handleNav(e, 'services')} className="hover:text-indigo-400 transition no-underline">Career Matching</a></li>
+              <li><a href="#courses" onClick={(e) => handleNav(e, 'courses')} className="hover:text-indigo-400 transition no-underline">Upskilling Courses</a></li>
             </ul>
           </div>
 
-          {/* Col 3: For Employers */}
+          {/* Col 4: For Employers */}
           <div>
             <h4 className="font-bold text-white text-sm mb-4">For Employers</h4>
             <ul className="space-y-2.5 text-xs">
-              <li><a href="#employers" className="hover:text-indigo-400 transition no-underline">AI Screening Platform</a></li>
-              <li><a href="#employers" className="hover:text-indigo-400 transition no-underline">Pre-Vetted Consultant Pool</a></li>
-              <li><a href="#employers" className="hover:text-indigo-400 transition no-underline">Staff Augmentation</a></li>
-              <li><a href="#employers" className="hover:text-indigo-400 transition no-underline">Contract-to-Hire Placement</a></li>
-              <li><a href="#transformations" className="hover:text-indigo-400 transition no-underline">Client Success Stories</a></li>
+              <li><a href="#bookconsultation" onClick={(e) => handleNav(e, 'bookconsultation')} className="hover:text-indigo-400 transition no-underline">Book a Consultation</a></li>
+              <li><a href="#employer-login" onClick={(e) => handleNav(e, 'employer-login')} className="hover:text-indigo-400 transition no-underline">Employer Login</a></li>
+              <li><a href="#employer-how-it-works" onClick={(e) => handleNav(e, 'employer-how-it-works')} className="hover:text-indigo-400 transition no-underline">AI Screening Platform</a></li>
             </ul>
           </div>
 
-          {/* Col 4: Contact Info */}
+          {/* Col 5: Contact Info */}
           <div>
             <h4 className="font-bold text-white text-sm mb-4">Get In Touch</h4>
             <div className="space-y-3 text-xs">
@@ -107,9 +114,9 @@ export default function Footer({ onRequestCallback, onNavigate }) {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <p>© 2026 Hire2Hired. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-slate-400 no-underline">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-400 no-underline">Terms of Service</a>
-            <a href="#" className="hover:text-slate-400 no-underline">Careers</a>
+            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-400 no-underline">Privacy Policy</a>
+            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-400 no-underline">Terms of Service</a>
+            <a href="#careers" onClick={(e) => handleNav(e, 'careers')} className="hover:text-slate-400 no-underline">Careers</a>
           </div>
         </div>
       </div>

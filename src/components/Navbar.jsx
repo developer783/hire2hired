@@ -189,7 +189,7 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
             </button>
 
             {activeDropdown === 'about' && (
-              <div className="absolute top-full left-0 w-[500px] bg-[#262121] text-white rounded-3xl shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 border border-slate-800">
+              <div className="absolute top-full left-0 w-[540px] bg-[#262121] text-white rounded-3xl shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 border border-slate-800">
                 <div className="grid grid-cols-2 gap-4">
                   <a 
                     href="#our-story" 
@@ -203,11 +203,39 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
                     </div>
                   </a>
 
-                  <a href="#how-it-works" className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                  <a 
+                    href="#employer-how-it-works" 
+                    onClick={(e) => handleNavClick(e, 'employer-how-it-works')} 
+                    className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white"
+                  >
                     <Lightbulb className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <div className="text-sm font-bold">How It Works</div>
                       <div className="text-xs text-slate-300 mt-1">Discover our AI-powered matching process.</div>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="#why-choose-us" 
+                    onClick={(e) => handleNavClick(e, 'why-choose-us')} 
+                    className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white"
+                  >
+                    <Award className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <div className="text-sm font-bold">Why Choose Us</div>
+                      <div className="text-xs text-slate-300 mt-1">See what makes Hire2Hired different.</div>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="#careers" 
+                    onClick={(e) => handleNavClick(e, 'careers')} 
+                    className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white"
+                  >
+                    <Briefcase className="w-5 h-5 text-sky-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <div className="text-sm font-bold">Careers</div>
+                      <div className="text-xs text-slate-300 mt-1">Join our team and shape the future of hiring.</div>
                     </div>
                   </a>
                 </div>
@@ -257,29 +285,41 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
             onMouseEnter={() => setActiveDropdown('employers')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className={`flex items-center gap-1 px-2.5 py-2 rounded-xl text-[14px] font-bold transition-all border-0 cursor-pointer ${
-              activeDropdown === 'employers' ? 'bg-[#262121] text-white' : 'text-slate-700 hover:text-indigo-600'
-            }`}>
+            <button 
+              onClick={() => onNavigate('bookconsultation')}
+              className={`flex items-center gap-1 px-2.5 py-2 rounded-xl text-[14px] font-bold transition-all border-0 cursor-pointer ${
+                currentView === 'bookconsultation' || activeDropdown === 'employers' ? 'bg-[#262121] text-white' : 'text-slate-700 hover:text-indigo-600'
+              }`}
+            >
               For Employers
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'employers' ? 'rotate-180 text-white' : 'text-slate-400'}`} />
             </button>
 
             {activeDropdown === 'employers' && (
-              <div className="absolute top-full left-0 w-[540px] bg-[#262121] text-white rounded-3xl shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 border border-slate-800 space-y-3">
+              <div className="absolute top-full left-0 w-[560px] bg-[#262121] text-white rounded-3xl shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 border border-slate-800 space-y-3">
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-400 px-2">Employer Hiring Solutions & Portal</p>
                 <div className="grid grid-cols-2 gap-3">
-                  <a href="#employers" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
-                    <Search className="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0" />
+                  <a href="#employer-login" onClick={(e) => { e.preventDefault(); setActiveDropdown(null); onNavigate('employer-login'); }} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                    <UserCheck className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-sm font-bold">AI Talent Sourcing</div>
-                      <div className="text-xs text-slate-300 mt-0.5">Find candidates with AI precision.</div>
+                      <div className="text-sm font-bold">Employer Login</div>
+                      <div className="text-xs text-slate-300 mt-0.5">Sign in to employer dashboard.</div>
                     </div>
                   </a>
 
-                  <a href="#employers" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
-                    <UserCheck className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                  <a href="#employer-how-it-works" onClick={(e) => { e.preventDefault(); setActiveDropdown(null); onNavigate('employer-how-it-works'); }} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                    <Sparkles className="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-sm font-bold">Rapid Screening</div>
-                      <div className="text-xs text-slate-300 mt-0.5">Candidate screening in 48 hours.</div>
+                      <div className="text-sm font-bold">How It Works</div>
+                      <div className="text-xs text-slate-300 mt-0.5">48-hour AI matching roadmap.</div>
+                    </div>
+                  </a>
+
+                  <a href="#bookconsultation" onClick={(e) => { e.preventDefault(); setActiveDropdown(null); onNavigate('bookconsultation'); }} className="col-span-2 flex items-start gap-3 p-3 rounded-2xl bg-white/10 hover:bg-white/20 transition no-underline text-white border border-white/10">
+                    <Building2 className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <div className="text-sm font-bold">Book Employer Consultation</div>
+                      <div className="text-xs text-slate-300 mt-0.5">Schedule a 15-min call with hiring strategists.</div>
                     </div>
                   </a>
                 </div>
@@ -311,7 +351,7 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
           </button>
 
           <button 
-            onClick={onRequestCallback}
+            onClick={() => onNavigate('signup')}
             className="h-10 px-6 rounded-full btn-blue text-xs font-extrabold flex items-center gap-2 border-0 cursor-pointer whitespace-nowrap shadow-md hover:scale-105 transition-transform"
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -338,8 +378,8 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
             <a href="#blog" onClick={(e) => handleNavClick(e, 'blog')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Blog</a>
             <a href="#our-story" onClick={(e) => handleNavClick(e, 'our-story')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">About Us / Our Story</a>
             <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Contact</a>
-            <a href="#services" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">For Consultants</a>
-            <a href="#employers" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">For Employers</a>
+            <a href="#signup" onClick={(e) => handleNavClick(e, 'signup')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">For Consultants</a>
+            <a href="#bookconsultation" onClick={(e) => handleNavClick(e, 'bookconsultation')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">For Employers / Book Consultation</a>
           </nav>
 
           <div className="flex flex-col gap-3 pt-2">
@@ -352,7 +392,7 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
             </button>
 
             <button 
-              onClick={() => { setMobileMenuOpen(false); onRequestCallback(); }}
+              onClick={() => { setMobileMenuOpen(false); onNavigate('signup'); }}
               className="w-full py-3 rounded-full btn-blue text-sm font-bold flex items-center justify-center gap-2 border-0 cursor-pointer"
             >
               <Sparkles className="w-4 h-4" />
