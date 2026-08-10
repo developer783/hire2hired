@@ -23,11 +23,18 @@ import ContactPage from './components/ContactPage';
 import BookConsultationPage from './components/BookConsultationPage';
 import EmployerLoginPage from './components/EmployerLoginPage';
 import EmployerHowItWorksPage from './components/EmployerHowItWorksPage';
+import EmployersOverviewPage from './components/EmployersOverviewPage';
+import EmployerServicesPage from './components/EmployerServicesPage';
+import ConsultantServicesPage from './components/ConsultantServicesPage';
+import ConsultantsOverviewPage from './components/ConsultantsOverviewPage';
+import ConsultantHowItWorksPage from './components/ConsultantHowItWorksPage';
 import SignupPage from './components/SignupPage';
 import StripePaymentView from './components/StripePaymentView';
 import ConsultantLoginPage from './components/ConsultantLoginPage';
 import WhyChooseUsPage from './components/WhyChooseUsPage';
 import CareersPage from './components/CareersPage';
+import FAQPage from './components/FAQPage';
+import IndustryPage from './components/IndustryPage';
 import useScrollAnimate from './hooks/useScrollAnimate';
 
 export default function App() {
@@ -36,6 +43,15 @@ export default function App() {
   const [currentView, setCurrentView] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash;
+      if (hash.startsWith('#consultant-service-')) {
+        return hash.replace('#', '') || 'consultant-service-resume-optimization';
+      }
+      if (hash.startsWith('#employer-service-')) {
+        return hash.replace('#', '') || 'employer-service-talent-sourcing';
+      }
+      if (hash.startsWith('#industry-') || hash === '#industries') {
+        return hash.replace('#', '') || 'industry-technology';
+      }
       if (hash === '#about' || hash === '#our-story') {
         return 'our-story';
       }
@@ -51,7 +67,16 @@ export default function App() {
       if (hash === '#contact') {
         return 'contact';
       }
-      if (hash === '#bookconsultation' || hash === '#employers') {
+      if (hash === '#employers') {
+        return 'employers';
+      }
+      if (hash === '#consultants') {
+        return 'consultants';
+      }
+      if (hash === '#how-it-works' || hash === '#consultant-how-it-works') {
+        return 'how-it-works';
+      }
+      if (hash === '#bookconsultation') {
         return 'bookconsultation';
       }
       if (hash === '#employer-login' || hash === '#employers-login') {
@@ -75,6 +100,9 @@ export default function App() {
       if (hash === '#careers') {
         return 'careers';
       }
+      if (hash === '#faq' || hash === '#faqs') {
+        return 'faq';
+      }
     }
     return 'home';
   });
@@ -85,7 +113,16 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash === '#about' || hash === '#our-story') {
+      if (hash.startsWith('#consultant-service-')) {
+        setCurrentView(hash.replace('#', '') || 'consultant-service-resume-optimization');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash.startsWith('#employer-service-')) {
+        setCurrentView(hash.replace('#', '') || 'employer-service-talent-sourcing');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash.startsWith('#industry-') || hash === '#industries') {
+        setCurrentView(hash.replace('#', '') || 'industry-technology');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#about' || hash === '#our-story') {
         setCurrentView('our-story');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#blog') {
@@ -100,7 +137,16 @@ export default function App() {
       } else if (hash === '#contact') {
         setCurrentView('contact');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#bookconsultation' || hash === '#employers') {
+      } else if (hash === '#employers') {
+        setCurrentView('employers');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#consultants') {
+        setCurrentView('consultants');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#how-it-works' || hash === '#consultant-how-it-works') {
+        setCurrentView('how-it-works');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#bookconsultation') {
         setCurrentView('bookconsultation');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#employer-login' || hash === '#employers-login') {
@@ -124,6 +170,9 @@ export default function App() {
       } else if (hash === '#careers') {
         setCurrentView('careers');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#faq' || hash === '#faqs') {
+        setCurrentView('faq');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#home' || hash === '') {
         setCurrentView('home');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -135,7 +184,9 @@ export default function App() {
 
   const handleNavigate = (view) => {
     setCurrentView(view);
-    if (view === 'our-story') {
+    if (view.startsWith('consultant-service-') || view.startsWith('employer-service-') || view.startsWith('industry-')) {
+      window.location.hash = view;
+    } else if (view === 'our-story') {
       window.location.hash = 'our-story';
     } else if (view === 'blog') {
       window.location.hash = 'blog';
@@ -145,7 +196,13 @@ export default function App() {
       window.location.hash = 'courses';
     } else if (view === 'contact') {
       window.location.hash = 'contact';
-    } else if (view === 'bookconsultation' || view === 'employers') {
+    } else if (view === 'employers') {
+      window.location.hash = 'employers';
+    } else if (view === 'consultants') {
+      window.location.hash = 'consultants';
+    } else if (view === 'how-it-works') {
+      window.location.hash = 'how-it-works';
+    } else if (view === 'bookconsultation') {
       window.location.hash = 'bookconsultation';
     } else if (view === 'employer-login') {
       window.location.hash = 'employer-login';
@@ -161,6 +218,8 @@ export default function App() {
       window.location.hash = 'why-choose-us';
     } else if (view === 'careers') {
       window.location.hash = 'careers';
+    } else if (view === 'faq' || view === 'faqs') {
+      window.location.hash = 'faq';
     } else {
       window.location.hash = 'home';
     }
@@ -188,7 +247,28 @@ export default function App() {
 
       {/* Main View Display */}
       <main className="flex-1">
-        {currentView === 'our-story' ? (
+        {currentView.startsWith('consultant-service-') ? (
+          <ConsultantServicesPage 
+            serviceSlug={currentView.replace('consultant-service-', '') || 'resume-optimization'}
+            onNavigate={handleNavigate}
+            onOpenApply={handleOpenApply}
+            isFullPage={true}
+          />
+        ) : currentView.startsWith('employer-service-') ? (
+          <EmployerServicesPage 
+            serviceSlug={currentView.replace('employer-service-', '') || 'talent-sourcing'}
+            onNavigate={handleNavigate}
+            onRequestCallback={handleOpenCallback}
+            isFullPage={true}
+          />
+        ) : currentView.startsWith('industry-') || currentView === 'industries' ? (
+          <IndustryPage 
+            industrySlug={currentView.replace('industry-', '') || 'technology'}
+            onNavigate={handleNavigate}
+            onRequestCallback={handleOpenCallback}
+            isFullPage={true}
+          />
+        ) : currentView === 'our-story' ? (
           <OurStory 
             onOpenApply={handleOpenApply} 
             onRequestCallback={handleOpenCallback} 
@@ -213,6 +293,22 @@ export default function App() {
           />
         ) : currentView === 'contact' ? (
           <ContactPage 
+            isFullPage={true}
+          />
+        ) : currentView === 'employers' ? (
+          <EmployersOverviewPage 
+            onNavigate={handleNavigate}
+            onRequestCallback={handleOpenCallback} 
+            isFullPage={true}
+          />
+        ) : currentView === 'consultants' ? (
+          <ConsultantsOverviewPage 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'how-it-works' ? (
+          <ConsultantHowItWorksPage 
+            onNavigate={handleNavigate}
             isFullPage={true}
           />
         ) : currentView === 'bookconsultation' ? (
@@ -256,6 +352,12 @@ export default function App() {
         ) : currentView === 'careers' ? (
           <CareersPage 
             onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'faq' ? (
+          <FAQPage 
+            onNavigate={handleNavigate}
+            onRequestCallback={handleOpenCallback}
             isFullPage={true}
           />
         ) : (
