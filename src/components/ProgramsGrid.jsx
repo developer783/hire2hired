@@ -14,7 +14,7 @@ export default function ProgramsGrid({ onOpenApply }) {
       tag: 'BESTSELLER',
       badgeColor: 'bg-violet-50 text-violet-700 border-violet-200',
       duration: '8 Months',
-      students: '1,000+',
+      students: '1,200+',
       rating: '4.9',
       skills: ['Java', 'Spring Boot', 'Microservices', 'AI APIs', 'OpenAI', 'REST'],
       highlights: [
@@ -52,7 +52,7 @@ export default function ProgramsGrid({ onOpenApply }) {
       tag: 'HOT',
       badgeColor: 'bg-indigo-50 text-indigo-700 border-indigo-200',
       duration: '6 Months',
-      students: '1,000+',
+      students: '1,100+',
       rating: '4.9',
       skills: ['LLMs', 'RAG', 'Prompt Eng.', 'Vector DBs', 'AI Agents', 'GenAI'],
       highlights: [
@@ -63,12 +63,88 @@ export default function ProgramsGrid({ onOpenApply }) {
       ]
     },
     {
+      id: 'cloud-devops-ai',
+      category: 'Cloud & DevOps',
+      title: 'Cloud & DevOps Engineer + AI',
+      subtitle: 'AWS, Azure, Kubernetes, Terraform & AI Infra',
+      icon: '☁️',
+      tag: 'HIGH GROWTH',
+      badgeColor: 'bg-sky-50 text-sky-700 border-sky-200',
+      duration: '6 Months',
+      students: '900+',
+      rating: '4.9',
+      skills: ['AWS', 'Azure', 'Kubernetes', 'Docker', 'Terraform', 'CI/CD'],
+      highlights: [
+        'Multi-cloud AWS & Azure architecture',
+        'Infrastructure as Code with Terraform',
+        'Kubernetes container orchestration',
+        'Automated AI model deployment pipelines'
+      ]
+    },
+    {
+      id: 'cybersecurity-ai',
+      category: 'Cybersecurity',
+      title: 'Cybersecurity & AI Threat Intelligence',
+      subtitle: 'Ethical Hacking, SIEM & Zero-Trust Cloud Security',
+      icon: '🛡️',
+      tag: 'HIGH DEMAND',
+      badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      duration: '6 Months',
+      students: '850+',
+      rating: '4.9',
+      skills: ['Ethical Hacking', 'SOC', 'SIEM', 'Cloud Security', 'AI Threat Detection'],
+      highlights: [
+        'Ethical hacking & penetration testing',
+        'AI-driven threat intelligence & SIEM',
+        'Zero-Trust cloud security frameworks',
+        'Compliance & vulnerability management'
+      ]
+    },
+    {
+      id: 'genai-agent-architect',
+      category: 'AI',
+      title: 'GenAI & Agentic Systems Architect',
+      subtitle: 'LangChain, Autonomous Agents & Custom Fine-Tuning',
+      icon: '🔮',
+      tag: 'ADVANCED',
+      badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
+      duration: '5 Months',
+      students: '750+',
+      rating: '5.0',
+      skills: ['LangChain', 'LlamaIndex', 'Fine-Tuning', 'LoRA', 'Agentic AI'],
+      highlights: [
+        'Custom LLM fine-tuning (LoRA/QLoRA)',
+        'Multi-agent crew orchestration',
+        'Enterprise RAG & Knowledge Graphs',
+        'Production AI Agent deployment'
+      ]
+    },
+    {
+      id: 'react-nextjs-ai',
+      category: 'Full Stack',
+      title: 'React & Next.js Full Stack + AI',
+      subtitle: 'Modern Frontend & AI Application Engineering',
+      icon: '⚡',
+      tag: 'POPULAR',
+      badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+      duration: '5 Months',
+      students: '1,050+',
+      rating: '4.9',
+      skills: ['React 18', 'Next.js 14', 'TypeScript', 'Tailwind', 'Vercel AI'],
+      highlights: [
+        'Next.js App Router & Server Components',
+        'TypeScript & Redux Toolkit state mgmt',
+        'Vercel AI SDK & streaming UI components',
+        'Real-time WebSocket & GraphQL integration'
+      ]
+    },
+    {
       id: 'data-scientist-ai',
       category: 'Data & AI',
       title: 'Data Scientist + AI Bootcamp',
       subtitle: 'Predictive Analytics & Deep Learning',
       icon: '📊',
-      tag: 'POPULAR',
+      tag: 'FEATURED',
       badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
       duration: '6 Months',
       students: '800+',
@@ -87,7 +163,7 @@ export default function ProgramsGrid({ onOpenApply }) {
       title: 'Python Full Stack + AI Bootcamp',
       subtitle: 'Modern Web Apps & Fast AI Backends',
       icon: '🐍',
-      tag: 'FEATURED',
+      tag: 'TRENDING',
       badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
       duration: '6 Months',
       students: '950+',
@@ -101,13 +177,51 @@ export default function ProgramsGrid({ onOpenApply }) {
       ]
     },
     {
+      id: 'salesforce-ai-dev',
+      category: 'Full Stack',
+      title: 'Salesforce Developer & AI Specialist',
+      subtitle: 'Apex, LWC, Einstein AI & Salesforce Cloud',
+      icon: '☁️',
+      tag: 'ENTERPRISE',
+      badgeColor: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+      duration: '5 Months',
+      students: '650+',
+      rating: '4.8',
+      skills: ['Apex', 'LWC', 'Einstein AI', 'Sales Cloud', 'Flows', 'SOQL'],
+      highlights: [
+        'Lightning Web Components & Apex code',
+        'Salesforce Einstein AI integration',
+        'Enterprise integration patterns & REST APIs',
+        'Salesforce Admin & Dev certification prep'
+      ]
+    },
+    {
+      id: 'embedded-edge-ai',
+      category: 'Software Engineering',
+      title: 'Embedded Systems & Edge AI',
+      subtitle: 'C/C++, Microcontrollers & Edge Machine Learning',
+      icon: '📟',
+      tag: 'NEW',
+      badgeColor: 'bg-slate-100 text-slate-800 border-slate-300',
+      duration: '6 Months',
+      students: '500+',
+      rating: '4.8',
+      skills: ['C/C++', 'RTOS', 'Microcontrollers', 'Edge Impulse', 'TensorFlow Lite'],
+      highlights: [
+        'C/C++ firmware development for microcontrollers',
+        'Real-Time Operating Systems (FreeRTOS)',
+        'Edge AI model optimization (TinyML)',
+        'IoT protocol suites (MQTT, CoAP, BLE)'
+      ]
+    },
+    {
       id: 'qa-automation-ai',
       category: 'Software Engineering',
       title: 'QA Automation + AI Testing Bootcamp',
       subtitle: 'Next-Gen Test Automation & AI Testing',
       icon: '🧪',
       tag: 'HIGH DEMAND',
-      badgeColor: 'bg-[#fef3c7] text-[#b45309] border-[#fde68a]',
+      badgeColor: 'bg-amber-50 text-amber-800 border-amber-200',
       duration: '5 Months',
       students: '700+',
       rating: '4.9',
@@ -146,7 +260,10 @@ export default function ProgramsGrid({ onOpenApply }) {
 
   const filteredBootcamps = activeTab === 'All' 
     ? bootcamps 
-    : bootcamps.filter(b => b.category === activeTab || (activeTab === 'Data & AI' && (b.category === 'Data & AI' || b.category === 'AI')));
+    : bootcamps.filter(b => {
+        if (activeTab === 'Data & AI') return b.category === 'Data & AI' || b.category === 'AI';
+        return b.category === activeTab;
+      });
 
   return (
     <section id="services" className="py-20 md:py-28 bg-[#fafbfd] border-t border-slate-200/80">
@@ -155,10 +272,10 @@ export default function ProgramsGrid({ onOpenApply }) {
         {/* Section Header */}
         <div className="text-center mb-12 max-w-3xl mx-auto animate-on-scroll">
           <p className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-2">
-            TECHNICAL BOOTCAMPS & SERVICES
+            TECHNICAL BOOTCAMPS & SPECIALISATIONS
           </p>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-slate-900 tracking-tight">
-            Job-Focused <span className="text-indigo-600">Technical Training</span> & IT Solutions
+            Job-Focused <span className="text-indigo-600">Core Specialisations</span> & IT Solutions
           </h2>
           <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
             US-market-ready AI-integrated bootcamps and end-to-end enterprise IT staffing services designed for career transformations and tech acceleration.
@@ -166,11 +283,11 @@ export default function ProgramsGrid({ onOpenApply }) {
 
           {/* Filter Tabs */}
           <div className="flex flex-wrap justify-center gap-2 mt-8">
-            {['All', 'Full Stack', 'Data & AI', 'Software Engineering'].map((tab) => (
+            {['All', 'Full Stack', 'Data & AI', 'AI', 'Cloud & DevOps', 'Cybersecurity', 'Software Engineering'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2.5 rounded-full text-sm font-bold transition border cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-extrabold transition border cursor-pointer ${
                   activeTab === tab 
                     ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' 
                     : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-indigo-300'
@@ -203,7 +320,7 @@ export default function ProgramsGrid({ onOpenApply }) {
                       </p>
                     </div>
                   </div>
-                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${item.badgeColor}`}>
+                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border whitespace-nowrap ${item.badgeColor}`}>
                     {item.tag}
                   </span>
                 </div>

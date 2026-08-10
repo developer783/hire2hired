@@ -7,7 +7,7 @@ import {
   ArrowRight, Phone, Sparkles
 } from 'lucide-react';
 
-export default function Navbar({ onRequestCallback }) {
+export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
@@ -20,12 +20,28 @@ export default function Navbar({ onRequestCallback }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavClick = (e, view, hash) => {
+    e.preventDefault();
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+    if (onNavigate) {
+      onNavigate(view);
+    }
+    if (hash && view === 'home') {
+      window.location.hash = hash;
+    }
+  };
+
   return (
     <header className={`navbar-sticky ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="container-main flex items-center justify-between h-[84px]">
         
         {/* Brand Logo */}
-        <a href="/" className="flex items-center gap-2.5 no-underline group flex-shrink-0">
+        <a 
+          href="#home" 
+          onClick={(e) => handleNavClick(e, 'home')} 
+          className="flex items-center gap-2.5 no-underline group flex-shrink-0"
+        >
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md group-hover:scale-105 transition-transform">
             H2
           </div>
@@ -43,18 +59,21 @@ export default function Navbar({ onRequestCallback }) {
             onMouseEnter={() => setActiveDropdown('courses')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className={`flex items-center gap-1 px-3 py-2 rounded-xl text-[14px] font-bold transition-all border-0 cursor-pointer ${
-              activeDropdown === 'courses' ? 'bg-[#262121] text-white' : 'text-slate-700 hover:text-indigo-600'
-            }`}>
+            <button 
+              onClick={() => onNavigate('courses')}
+              className={`flex items-center gap-1 px-3 py-2 rounded-xl text-[14px] font-bold transition-all border-0 cursor-pointer ${
+                currentView === 'courses' || activeDropdown === 'courses' ? 'bg-[#262121] text-white' : 'text-slate-700 hover:text-indigo-600'
+              }`}
+            >
               Courses
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'courses' ? 'rotate-180 text-white' : 'text-slate-400'}`} />
             </button>
 
             {activeDropdown === 'courses' && (
-              <div className="absolute top-full left-0 w-[580px] bg-[#262121] text-white rounded-3xl shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 border border-slate-800 space-y-3">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400 px-2">Job-Ready AI & Tech Bootcamps</p>
+              <div className="absolute top-full left-0 w-[640px] bg-[#262121] text-white rounded-3xl shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 border border-slate-800 space-y-3">
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-400 px-2">12+ Job-Ready AI & Tech Specialisations</p>
                 <div className="grid grid-cols-2 gap-3">
-                  <a href="#services" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                  <a href="#courses" onClick={() => { setActiveDropdown(null); onNavigate('courses'); }} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
                     <span className="text-xl">☕</span>
                     <div>
                       <div className="text-sm font-bold flex items-center gap-2">
@@ -65,18 +84,18 @@ export default function Navbar({ onRequestCallback }) {
                     </div>
                   </a>
 
-                  <a href="#services" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
-                    <span className="text-xl">⚙️</span>
+                  <a href="#services" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                    <span className="text-xl">☁️</span>
                     <div>
                       <div className="text-sm font-bold flex items-center gap-2">
-                        Data Engineer + AI
-                        <span className="text-[9px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full font-bold">NEW</span>
+                        Cloud & DevOps + AI
+                        <span className="text-[9px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full font-bold">HIGH GROWTH</span>
                       </div>
-                      <div className="text-xs text-slate-300 mt-0.5">Spark, Airflow, AWS & MLOps Pipelines</div>
+                      <div className="text-xs text-slate-300 mt-0.5">AWS, Azure, Terraform, K8s & AI Infra</div>
                     </div>
                   </a>
 
-                  <a href="#services" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                  <a href="#services" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
                     <span className="text-xl">🤖</span>
                     <div>
                       <div className="text-sm font-bold flex items-center gap-2">
@@ -87,23 +106,42 @@ export default function Navbar({ onRequestCallback }) {
                     </div>
                   </a>
 
-                  <a href="#services" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
-                    <span className="text-xl">📊</span>
+                  <a href="#services" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                    <span className="text-xl">🛡️</span>
                     <div>
-                      <div className="text-sm font-bold">Data Science + AI</div>
-                      <div className="text-xs text-slate-300 mt-0.5">Python, ML, Deep Learning & Predictive AI</div>
+                      <div className="text-sm font-bold flex items-center gap-2">
+                        Cybersecurity & AI Security
+                        <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">HIGH DEMAND</span>
+                      </div>
+                      <div className="text-xs text-slate-300 mt-0.5">Ethical Hacking, SIEM & Zero-Trust Cloud</div>
                     </div>
                   </a>
 
-                  <a href="#services" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
-                    <span className="text-xl">🐍</span>
+                  <a href="#services" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                    <span className="text-xl">⚙️</span>
                     <div>
-                      <div className="text-sm font-bold">Python Full Stack + AI</div>
-                      <div className="text-xs text-slate-300 mt-0.5">Django, FastAPI, React & LangChain</div>
+                      <div className="text-sm font-bold">Data Engineer + AI</div>
+                      <div className="text-xs text-slate-300 mt-0.5">Spark, Airflow, AWS & MLOps Pipelines</div>
                     </div>
                   </a>
 
-                  <a href="#services" className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                  <a href="#services" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                    <span className="text-xl">🔮</span>
+                    <div>
+                      <div className="text-sm font-bold">GenAI & Agentic Architect</div>
+                      <div className="text-xs text-slate-300 mt-0.5">LangChain, Autonomous Agents & Fine-Tuning</div>
+                    </div>
+                  </a>
+
+                  <a href="#services" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                    <span className="text-xl">⚡</span>
+                    <div>
+                      <div className="text-sm font-bold">React & Next.js Full Stack</div>
+                      <div className="text-xs text-slate-300 mt-0.5">Next.js 14, TypeScript & Vercel AI SDK</div>
+                    </div>
+                  </a>
+
+                  <a href="#services" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
                     <span className="text-xl">🧪</span>
                     <div>
                       <div className="text-sm font-bold">QA Automation + AI</div>
@@ -116,18 +154,25 @@ export default function Navbar({ onRequestCallback }) {
           </div>
 
           {/* 2. SERVICES */}
-          <a href="#services" className="px-2.5 py-2 text-[14px] font-bold text-slate-700 hover:text-indigo-600 transition-colors no-underline">
+          <a 
+            href="#services" 
+            onClick={(e) => { e.preventDefault(); onNavigate('services'); }}
+            className={`px-2.5 py-2 text-[14px] font-bold transition-colors no-underline ${
+              currentView === 'services' ? 'text-indigo-600 font-extrabold' : 'text-slate-700 hover:text-indigo-600'
+            }`}
+          >
             Services
           </a>
 
           {/* 3. BLOG */}
-          <a href="#transformations" className="px-2.5 py-2 text-[14px] font-bold text-slate-700 hover:text-indigo-600 transition-colors no-underline">
+          <a 
+            href="#blog" 
+            onClick={(e) => { e.preventDefault(); onNavigate('blog'); }}
+            className={`px-2.5 py-2 text-[14px] font-bold transition-colors no-underline ${
+              currentView === 'blog' ? 'text-indigo-600 font-extrabold' : 'text-slate-700 hover:text-indigo-600'
+            }`}
+          >
             Blog
-          </a>
-
-          {/* 4. JOBS */}
-          <a href="#employers" className="px-2.5 py-2 text-[14px] font-bold text-slate-700 hover:text-indigo-600 transition-colors no-underline">
-            Jobs
           </a>
 
           {/* 5. ABOUT */}
@@ -146,7 +191,11 @@ export default function Navbar({ onRequestCallback }) {
             {activeDropdown === 'about' && (
               <div className="absolute top-full left-0 w-[500px] bg-[#262121] text-white rounded-3xl shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-2 border border-slate-800">
                 <div className="grid grid-cols-2 gap-4">
-                  <a href="#about" className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white">
+                  <a 
+                    href="#our-story" 
+                    onClick={(e) => handleNavClick(e, 'our-story')} 
+                    className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white"
+                  >
                     <BookOpen className="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <div className="text-sm font-bold">Our Story</div>
@@ -238,6 +287,17 @@ export default function Navbar({ onRequestCallback }) {
             )}
           </div>
 
+          {/* 8. CONTACT */}
+          <a 
+            href="#contact" 
+            onClick={(e) => { e.preventDefault(); onNavigate('contact'); }}
+            className={`px-2.5 py-2 text-[14px] font-bold transition-colors no-underline ${
+              currentView === 'contact' ? 'text-indigo-600 font-extrabold' : 'text-slate-700 hover:text-indigo-600'
+            }`}
+          >
+            Contact
+          </a>
+
         </nav>
 
         {/* Right CTA Buttons Area: Request Callback & Get Started */}
@@ -273,11 +333,11 @@ export default function Navbar({ onRequestCallback }) {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-4 animate-in fade-in">
           <nav className="flex flex-col space-y-3">
-            <a href="#services" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Courses</a>
-            <a href="#services" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Services</a>
-            <a href="#transformations" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Blog</a>
-            <a href="#employers" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Jobs</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">About Us</a>
+            <a href="#courses" onClick={(e) => handleNavClick(e, 'courses')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Courses</a>
+            <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Services</a>
+            <a href="#blog" onClick={(e) => handleNavClick(e, 'blog')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Blog</a>
+            <a href="#our-story" onClick={(e) => handleNavClick(e, 'our-story')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">About Us / Our Story</a>
+            <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Contact</a>
             <a href="#services" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">For Consultants</a>
             <a href="#employers" onClick={() => setMobileMenuOpen(false)} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">For Employers</a>
           </nav>

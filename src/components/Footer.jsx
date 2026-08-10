@@ -1,7 +1,14 @@
 import React from 'react';
 import { ArrowRight, Mail, Phone, MapPin, Linkedin, Twitter, Youtube, Github } from 'lucide-react';
 
-export default function Footer({ onRequestCallback }) {
+export default function Footer({ onRequestCallback, onNavigate }) {
+  const handleNav = (e, view) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate(view);
+    }
+  };
+
   return (
     <footer className="bg-slate-950 text-slate-400 pt-16 pb-12 border-t border-slate-800">
       <div className="container-main">
@@ -9,7 +16,7 @@ export default function Footer({ onRequestCallback }) {
           
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <a href="/" className="flex items-center gap-2.5 no-underline">
+            <a href="#home" onClick={(e) => handleNav(e, 'home')} className="flex items-center gap-2.5 no-underline">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
                 H2
               </div>
@@ -43,6 +50,8 @@ export default function Footer({ onRequestCallback }) {
           <div>
             <h4 className="font-bold text-white text-sm mb-4">For Consultants</h4>
             <ul className="space-y-2.5 text-xs">
+              <li><a href="#our-story" onClick={(e) => handleNav(e, 'our-story')} className="hover:text-indigo-400 transition no-underline">Our Story</a></li>
+              <li><a href="#blog" onClick={(e) => handleNav(e, 'blog')} className="hover:text-indigo-400 transition no-underline">Blog & Insights</a></li>
               <li><a href="#services" className="hover:text-indigo-400 transition no-underline">Career Matching</a></li>
               <li><a href="#services" className="hover:text-indigo-400 transition no-underline">Java & Enterprise Contracts</a></li>
               <li><a href="#services" className="hover:text-indigo-400 transition no-underline">AI & Data Science Roles</a></li>
@@ -67,17 +76,20 @@ export default function Footer({ onRequestCallback }) {
           <div>
             <h4 className="font-bold text-white text-sm mb-4">Get In Touch</h4>
             <div className="space-y-3 text-xs">
+              <a href="#contact" onClick={(e) => handleNav(e, 'contact')} className="hover:text-indigo-400 font-bold block no-underline text-indigo-400">
+                Contact Page →
+              </a>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-                <span>contact@hire2hired.com</span>
+                <a href="mailto:support@hire2hired.com" className="hover:text-white no-underline text-slate-400">support@hire2hired.com</a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-                <span>+1 (800) 555-HIRE</span>
+                <a href="tel:3073847833" className="hover:text-white no-underline text-slate-400">307-384-7833</a>
               </div>
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
-                <span>Enterprise Talent Matching Nationwide</span>
+                <span>Casper, WY, USA</span>
               </div>
 
               <button 
