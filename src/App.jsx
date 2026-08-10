@@ -32,6 +32,7 @@ import TermsOfServicePage from './components/TermsOfServicePage';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import CandidatePrivacyNoticePage from './components/CandidatePrivacyNoticePage';
 import NoticeAtCollectionPage from './components/NoticeAtCollectionPage';
+import CookiePolicyPage from './components/CookiePolicyPage';
 import SignupPage from './components/SignupPage';
 import StripePaymentView from './components/StripePaymentView';
 import ConsultantLoginPage from './components/ConsultantLoginPage';
@@ -188,6 +189,9 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#notice-at-collection' || hash === '#collection-notice') {
         setCurrentView('notice-at-collection');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#cookie-policy' || hash === '#cookies') {
+        setCurrentView('cookie-policy');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#home' || hash === '') {
         setCurrentView('home');
@@ -393,6 +397,11 @@ export default function App() {
           />
         ) : currentView === 'notice-at-collection' ? (
           <NoticeAtCollectionPage 
+            onNavigate={handleNavigate}
+            isFullPage={true}
+          />
+        ) : currentView === 'cookie-policy' ? (
+          <CookiePolicyPage 
             onNavigate={handleNavigate}
             isFullPage={true}
           />
