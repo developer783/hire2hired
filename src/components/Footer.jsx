@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Mail, Phone, MapPin, Linkedin, Twitter, Youtube, Github, Sparkles } from 'lucide-react';
+import logo from '../assets/logo-light.png';
 
 export default function Footer({ onRequestCallback, onNavigate }) {
   const handleNav = (e, view) => {
@@ -17,11 +18,9 @@ export default function Footer({ onRequestCallback, onNavigate }) {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-10 border-b border-slate-800/80">
           <div className="space-y-3 max-w-xl">
             <a href="#home" onClick={(e) => handleNav(e, 'home')} className="flex items-center gap-2.5 no-underline">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
-                H2
-              </div>
+              <img src={logo} alt="Hire2Hired logo" className="h-6 w-auto" />
               <span className="font-display font-extrabold text-2xl tracking-tight text-white">
-                Hire<span className="text-indigo-500">2</span>Hired
+                Hire<span className="text-[#FE6037]">2</span>Hired
               </span>
             </a>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-medium">
@@ -81,6 +80,7 @@ export default function Footer({ onRequestCallback, onNavigate }) {
             <ul className="space-y-2 text-xs font-medium">
               <li><a href="#our-story" onClick={(e) => handleNav(e, 'our-story')} className="hover:text-white transition no-underline">Our Story</a></li>
               <li><a href="#why-choose-us" onClick={(e) => handleNav(e, 'why-choose-us')} className="hover:text-white transition no-underline">Why Choose Us</a></li>
+              <li><a href="#sgb-partnership" onClick={(e) => handleNav(e, 'sgb-partnership')} className="hover:text-white transition no-underline">SGB Partnership</a></li>
               <li><a href="#careers" onClick={(e) => handleNav(e, 'careers')} className="hover:text-white transition no-underline text-emerald-400 font-bold">Careers</a></li>
               <li><a href="#contact" onClick={(e) => handleNav(e, 'contact')} className="hover:text-white transition no-underline">Contact Us</a></li>
             </ul>

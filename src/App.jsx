@@ -40,6 +40,8 @@ import WhyChooseUsPage from './components/WhyChooseUsPage';
 import CareersPage from './components/CareersPage';
 import FAQPage from './components/FAQPage';
 import IndustryPage from './components/IndustryPage';
+import SGBPartnershipPage from './components/SGBPartnershipPage';
+import SGBPartnershipTeaser from './components/SGBPartnershipTeaser';
 import useScrollAnimate from './hooks/useScrollAnimate';
 
 export default function App() {
@@ -107,6 +109,9 @@ export default function App() {
       }
       if (hash === '#faq' || hash === '#faqs') {
         return 'faq';
+      }
+      if (hash === '#sgb-partnership' || hash === '#sgb') {
+        return 'sgb-partnership';
       }
     }
     return 'home';
@@ -178,6 +183,9 @@ export default function App() {
       } else if (hash === '#faq' || hash === '#faqs') {
         setCurrentView('faq');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#sgb-partnership' || hash === '#sgb') {
+        setCurrentView('sgb-partnership');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#terms' || hash === '#terms-of-service') {
         setCurrentView('terms');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -240,6 +248,8 @@ export default function App() {
       window.location.hash = 'careers';
     } else if (view === 'faq' || view === 'faqs') {
       window.location.hash = 'faq';
+    } else if (view === 'sgb-partnership') {
+      window.location.hash = 'sgb-partnership';
     } else {
       window.location.hash = 'home';
     }
@@ -380,6 +390,11 @@ export default function App() {
             onRequestCallback={handleOpenCallback}
             isFullPage={true}
           />
+        ) : currentView === 'sgb-partnership' ? (
+          <SGBPartnershipPage
+            onNavigate={handleNavigate}
+            onRequestCallback={handleOpenCallback}
+          />
         ) : currentView === 'terms' ? (
           <TermsOfServicePage 
             onNavigate={handleNavigate}
@@ -414,7 +429,10 @@ export default function App() {
               onNavigate={handleNavigate}
             />
 
-            {/* SECTION 1: Interactive AI Resume Analyzer (Immediately after Hero) */}
+            {/* SGB × Hire2Hired Partnership brief (links to full page) */}
+            <SGBPartnershipTeaser onNavigate={handleNavigate} />
+
+            {/* SECTION 1: Interactive AI Resume Analyzer */}
             <AIResumeAnalyzer onOpenApply={handleOpenApply} />
 
             {/* SECTION 2: Interactive Hiring Journey Timeline */}

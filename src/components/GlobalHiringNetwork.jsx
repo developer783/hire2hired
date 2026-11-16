@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Globe, MapPin, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import worldMap from '../assets/world-map.svg';
 
 export default function GlobalHiringNetwork({ onRequestCallback }) {
   const [activeNotice, setActiveNotice] = useState(0);
@@ -12,13 +13,14 @@ export default function GlobalHiringNetwork({ onRequestCallback }) {
     { city: 'Sydney, Australia', role: 'Data Engineer + MLOps', company: 'HealthTech Pioneer', time: '12m ago' },
   ];
 
+  // Positions are % of the world-map.svg viewBox (Natural Earth projection)
   const locations = [
-    { name: 'USA', x: '24%', y: '38%', count: '4,200+ Hires' },
-    { name: 'Canada', x: '22%', y: '25%', count: '1,800+ Hires' },
-    { name: 'UK', x: '47%', y: '28%', count: '1,400+ Hires' },
-    { name: 'Germany', x: '52%', y: '32%', count: '1,100+ Hires' },
-    { name: 'India', x: '70%', y: '52%', count: '3,800+ Hires' },
-    { name: 'Australia', x: '84%', y: '75%', count: '900+ Hires' },
+    { name: 'USA', x: '19.7%', y: '29.5%', count: '4,200+ Hires' },
+    { name: 'Canada', x: '20.4%', y: '17.2%', count: '1,800+ Hires' },
+    { name: 'UK', x: '46.7%', y: '19.7%', count: '1,400+ Hires' },
+    { name: 'Germany', x: '49.7%', y: '20.7%', count: '1,100+ Hires' },
+    { name: 'India', x: '69.6%', y: '42.9%', count: '3,800+ Hires' },
+    { name: 'Australia', x: '85.7%', y: '77.0%', count: '900+ Hires' },
   ];
 
   useEffect(() => {
@@ -70,7 +72,14 @@ export default function GlobalHiringNetwork({ onRequestCallback }) {
           </div>
 
           {/* Map Node Dots Visual */}
-          <div className="relative w-full h-[260px] my-auto">
+          <div className="relative w-full max-w-5xl mx-auto my-8 aspect-[1000/468]">
+            <img
+              src={worldMap}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full select-none pointer-events-none"
+              draggable="false"
+            />
             {locations.map((loc, idx) => (
               <div 
                 key={idx}

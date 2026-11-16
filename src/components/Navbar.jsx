@@ -4,8 +4,9 @@ import {
   Target, GitMerge, FileText, MessageSquare, CheckCircle, UserCheck,
   TrendingUp, Search, BarChart2, Users, Database, LogIn, 
   Code, Code2, DollarSign, Heart, Megaphone, Wrench, Building2, HelpCircle, 
-  ArrowRight, Phone, Sparkles
+  ArrowRight, Phone, Sparkles, Handshake
 } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,11 +43,9 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
           onClick={(e) => handleNavClick(e, 'home')} 
           className="flex items-center gap-2.5 no-underline group flex-shrink-0"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md group-hover:scale-105 transition-transform">
-            H2
-          </div>
+          <img src={logo} alt="Hire2Hired logo" className="h-6 w-auto group-hover:scale-105 transition-transform" />
           <span className="font-display font-extrabold text-2xl tracking-tight text-slate-900">
-            Hire<span className="text-indigo-600">2</span>Hired
+            Hire<span className="text-[#FE6037]">2</span>Hired
           </span>
         </a>
 
@@ -155,7 +154,7 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button className={`flex items-center gap-1 px-2 py-1.5 rounded-xl text-[14px] font-bold transition-all border-0 cursor-pointer whitespace-nowrap ${
-              activeDropdown === 'about' || currentView === 'our-story' || currentView === 'why-choose-us' || currentView === 'careers' ? 'bg-[#262121] text-white' : 'text-slate-700 hover:text-indigo-600'
+              activeDropdown === 'about' || currentView === 'our-story' || currentView === 'why-choose-us' || currentView === 'careers' || currentView === 'sgb-partnership' ?'bg-[#262121] text-white' : 'text-slate-700 hover:text-indigo-600'
             }`}>
               About
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'about' ? 'rotate-180 text-white' : 'text-slate-400'}`} />
@@ -209,6 +208,18 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
                     <div>
                       <div className="text-sm font-bold">Careers</div>
                       <div className="text-xs text-slate-300 mt-1">Join our team and shape the future of hiring.</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="#sgb-partnership"
+                    onClick={(e) => handleNavClick(e, 'sgb-partnership')}
+                    className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-white/10 transition no-underline text-white"
+                  >
+                    <Handshake className="w-5 h-5 text-amber-300 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <div className="text-sm font-bold">SGB Partnership</div>
+                      <div className="text-xs text-slate-300 mt-1">Official Training & Career Development Contractor.</div>
                     </div>
                   </a>
                 </div>
@@ -685,6 +696,7 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
           <nav className="flex flex-col space-y-3">
             <a href="#our-story" onClick={(e) => handleNavClick(e, 'our-story')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">About Us / Our Story</a>
             <a href="#why-choose-us" onClick={(e) => handleNavClick(e, 'why-choose-us')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Why Choose Us</a>
+            <a href="#sgb-partnership" onClick={(e) => handleNavClick(e, 'sgb-partnership')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">SGB Partnership</a>
             <a href="#careers" onClick={(e) => handleNavClick(e, 'careers')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Careers</a>
             <a href="#blog" onClick={(e) => handleNavClick(e, 'blog')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Blog / Guides (Resources)</a>
             <a href="#courses" onClick={(e) => handleNavClick(e, 'courses')} className="text-base font-bold text-slate-800 hover:text-indigo-600 no-underline">Courses</a>
