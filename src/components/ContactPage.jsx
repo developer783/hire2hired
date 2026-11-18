@@ -4,6 +4,7 @@ import {
   MessageSquare, Clock, ShieldCheck, Sparkles, HelpCircle, ChevronDown
 } from 'lucide-react';
 import heroImg from '../assets/contact_hero.png';
+import { sendForm, FORM_INBOX } from '../lib/sendForm';
 
 export default function ContactPage({ isFullPage = true }) {
   const [formData, setFormData] = useState({
@@ -16,15 +17,35 @@ export default function ContactPage({ isFullPage = true }) {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [honeypot, setHoneypot] = useState(''); // hidden field; bots fill it, people don't
   const [openFaq, setOpenFaq] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (honeypot) return; // silently drop spam bots
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setError('');
+    try {
+      await sendForm(
+        `Contact form: ${formData.subject}`,
+        {
+          Name: `${formData.firstName} ${formData.lastName}`.trim(),
+          Email: formData.email,
+          Phone: formData.phone,
+          Subject: formData.subject,
+          Message: formData.message,
+          'Sent from': window.location.href,
+        },
+        formData.email
+      );
       setSubmitted(true);
-    }, 800);
+    } catch (err) {
+      console.error('Contact form failed:', err);
+      setError('fail');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactCards = [
@@ -134,6 +155,7 @@ export default function ContactPage({ isFullPage = true }) {
                 <button 
                   onClick={() => {
                     setSubmitted(false);
+                    setError('');
                     setFormData({ firstName: '', lastName: '', email: '', phone: '', subject: '', message: '' });
                   }}
                   className="mt-4 px-6 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold border-0 cursor-pointer"
@@ -143,7 +165,19 @@ export default function ContactPage({ isFullPage = true }) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                
+
+                {/* Spam honeypot: hidden from people, filled in by bots */}
+                <input
+                  type="text"
+                  name="_honey"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="hidden"
+                  aria-hidden="true"
+                />
+
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1.5">First Name <span className="text-rose-500">*</span></label>
@@ -217,10 +251,17 @@ export default function ContactPage({ isFullPage = true }) {
                   ></textarea>
                 </div>
 
-                <button 
+                {error && (
+                  <div role="alert" className="rounded-xl bg-rose-50 border border-rose-200 px-4 py-3 text-xs sm:text-sm text-rose-700">
+                    Sorry, your message couldn't be sent. Please try again, or email us directly at{' '}
+                    <a href={`mailto:${FORM_INBOX}`} className="font-bold underline text-rose-700">{FORM_INBOX}</a>.
+                  </div>
+                )}
+
+                <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm shadow-md hover:scale-[1.01] transition-all border-0 cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-70 disabled:cursor-wait text-white font-extrabold text-sm shadow-md hover:scale-[1.01] transition-all border-0 cursor-pointer flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <span>Sending Message...</span>
