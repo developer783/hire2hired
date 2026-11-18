@@ -36,6 +36,7 @@ import CookiePolicyPage from './components/CookiePolicyPage';
 import SignupPage from './components/SignupPage';
 import StripePaymentView from './components/StripePaymentView';
 import PaymentResultPage from './components/PaymentResultPage';
+import WhatsAppChatButton from './components/WhatsAppChatButton';
 import ConsultantLoginPage from './components/ConsultantLoginPage';
 import WhyChooseUsPage from './components/WhyChooseUsPage';
 import CareersPage from './components/CareersPage';
@@ -502,6 +503,9 @@ export default function App() {
         onClose={() => setModalOpen(false)} 
         defaultProgram={selectedProgram}
       />
+
+      {/* Floating WhatsApp chat button (chat only; number is not displayed) */}
+      <WhatsAppChatButton />
     </div>
   );
 }

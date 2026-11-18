@@ -3,6 +3,7 @@ import {
   X, Phone, User, Mail, MessageSquare, CheckCircle2, Sparkles, 
   GraduationCap, Briefcase, Paperclip, Clock, ArrowRight, ShieldCheck, FileText
 } from 'lucide-react';
+import { whatsappChatUrl } from '../lib/whatsapp';
 
 export default function CallbackModal({ isOpen, onClose, defaultProgram = '' }) {
   if (!isOpen) return null;
@@ -114,7 +115,7 @@ export default function CallbackModal({ isOpen, onClose, defaultProgram = '' }) 
 
               {/* Chat on WhatsApp Banner */}
               <a 
-                href="https://wa.me/13073847833" 
+                href={whatsappChatUrl()}
                 target="_blank" 
                 rel="noreferrer"
                 className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-3xl p-5 flex items-center justify-between no-underline transition shadow-2xs group"
