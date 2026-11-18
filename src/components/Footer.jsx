@@ -17,7 +17,7 @@ export default function Footer({ onRequestCallback, onNavigate }) {
         {/* Top Brand Banner & Info */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-10 border-b border-slate-800/80">
           <div className="space-y-3 max-w-xl">
-            <a href="#home" onClick={(e) => handleNav(e, 'home')} className="flex items-center gap-2.5 no-underline">
+            <a href="/" className="flex items-center gap-2.5 no-underline">
               <img src={logo} alt="Hire2Hired logo" className="h-6 w-auto" />
               <span className="font-display font-extrabold text-2xl tracking-tight text-white">
                 Hire<span className="text-[#FE6037]">2</span>Hired

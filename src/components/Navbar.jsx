@@ -38,9 +38,9 @@ export default function Navbar({ onRequestCallback, currentView, onNavigate }) {
       <div className="w-full px-6 sm:px-10 lg:px-14 flex items-center justify-between h-[84px]">
         
         {/* Brand Logo */}
-        <a 
-          href="#home" 
-          onClick={(e) => handleNavClick(e, 'home')} 
+        {/* Plain link (no preventDefault) so clicking the logo fully reloads the homepage */}
+        <a
+          href="/"
           className="flex items-center gap-2.5 no-underline group flex-shrink-0"
         >
           <img src={logo} alt="Hire2Hired logo" className="h-6 w-auto group-hover:scale-105 transition-transform" />
