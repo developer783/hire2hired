@@ -16,7 +16,7 @@ export default function ConsultantHowItWorksPage({ onNavigate, isFullPage = true
       details: [
         "Automated ATS scorecard & formatting feedback",
         "Specify preferred contract rates, remote timezone, & availability",
-        "100% free platform for consultants with zero hidden fees"
+        "Free to apply, no hidden fees"
       ]
     },
     {
@@ -73,7 +73,7 @@ export default function ConsultantHowItWorksPage({ onNavigate, isFullPage = true
         {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-extrabold mb-4">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /> 100% FREE FOR CONSULTANTS
+            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /> FREE TO APPLY, NO HIDDEN FEES
           </div>
           <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-slate-900 tracking-tight leading-tight">
             How Hire2Hired Works <br />
@@ -136,7 +136,7 @@ export default function ConsultantHowItWorksPage({ onNavigate, isFullPage = true
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <span className="text-3xl font-display font-extrabold text-indigo-600">Step {steps[activeStep].num}</span>
               <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-extrabold border border-emerald-200">
-                ● 100% Free Platform
+                ● Transparent Pricing
               </span>
             </div>
 

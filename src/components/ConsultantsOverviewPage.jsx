@@ -81,7 +81,7 @@ export default function ConsultantsOverviewPage({ onNavigate, isFullPage = true 
             
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-extrabold uppercase tracking-wider">
-                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" /> 100% FREE FOR CONSULTANTS
+                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" /> FREE TO APPLY, NO HIDDEN FEES
               </div>
 
               <div className="space-y-3">

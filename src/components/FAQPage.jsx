@@ -15,8 +15,8 @@ export default function FAQPage({ onNavigate, onRequestCallback, isFullPage = tr
   const faqsList = [
     {
       category: "For Consultants",
-      question: "Is there any cost for job seekers or consultants to apply?",
-      answer: "No, Hire2Hired is 100% free for candidates and consultants. There are zero application, placement, or profile setup fees. Our client enterprises cover placement costs when they hire."
+      question: "Is Hire2Hired free to use?",
+      answer: "Consultants can create profiles and apply to jobs for free. Paid career services (resume optimization, LinkedIn optimization, resume marketing and interview preparation) are available with transparent pricing. Employers have access to different engagement options based on their hiring needs."
     },
     {
       category: "For Consultants",

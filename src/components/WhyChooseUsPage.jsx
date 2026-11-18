@@ -19,8 +19,8 @@ export default function WhyChooseUsPage({ onNavigate, onRequestCallback, isFullP
     },
     {
       icon: <ShieldCheck className="w-6 h-6 text-emerald-500" />,
-      title: "Zero Upfront Cost for Talent",
-      description: "100% free for job seekers and consultants. We invest in your career, resume optimization, and interview readiness without hidden fees."
+      title: "Transparent Pricing",
+      description: "No upfront fees for employers, no placement fees for consultants. Free to apply, with optional career services like resume optimization and interview readiness at clear, upfront prices."
     },
     {
       icon: <HeartHandshake className="w-6 h-6 text-rose-500" />,

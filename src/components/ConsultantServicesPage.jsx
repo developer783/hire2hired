@@ -41,7 +41,7 @@ export default function ConsultantServicesPage({ serviceSlug = 'resume-optimizat
             { title: "1-Click Application Approval", desc: "Submit your pre-verified dossier with a single click to open client roles." }
           ],
           faqs: [
-            { q: "Do I have to pay to get matched with enterprise clients?", a: "No! Hire2Hired is 100% free for consultants. Clients pay our platform for talent matching and delivery." }
+            { q: "Is Hire2Hired free to use?", a: "Consultants can create profiles and apply to jobs for free. Paid career services (resume optimization, LinkedIn optimization, resume marketing and interview preparation) are available with transparent pricing." }
           ]
         };
       case 'interview-prep':
@@ -75,7 +75,7 @@ export default function ConsultantServicesPage({ serviceSlug = 'resume-optimizat
           stats: [
             { label: "Assessment Tests", value: "85+" },
             { label: "Hire Priority", value: "3x Higher" },
-            { label: "Verified Badge", value: "100% Free" }
+            { label: "Verified Badge", value: "Included" }
           ],
           description: "Earn verified skill badges in React, Java, Python, AWS, Kubernetes, and System Architecture that give you top tier placement on employer shortlists.",
           features: [
@@ -273,7 +273,7 @@ export default function ConsultantServicesPage({ serviceSlug = 'resume-optimizat
                 <div className="absolute bottom-4 left-4 right-4 p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-xs text-white flex items-center gap-2">
                   <Star className="w-5 h-5 text-amber-400 flex-shrink-0" />
                   <div>
-                    <div className="font-extrabold text-white">100% Free for Tech Talent</div>
+                    <div className="font-extrabold text-white">Free to Apply, No Hidden Fees</div>
                     <div className="text-[10px] text-slate-300">Boost your hiring rate cards today</div>
                   </div>
                 </div>
@@ -345,7 +345,7 @@ export default function ConsultantServicesPage({ serviceSlug = 'resume-optimizat
         <div className="max-w-6xl mx-auto bg-gradient-to-r from-indigo-600 via-indigo-700 to-blue-700 rounded-3xl p-8 sm:p-12 text-white text-center space-y-4 shadow-xl">
           <h2 className="text-xl sm:text-3xl font-extrabold">Accelerate Your Consulting Career Today</h2>
           <p className="text-xs sm:text-sm text-indigo-100 max-w-lg mx-auto font-medium">
-            Join 50,000+ top engineers matched with pre-vetted enterprise client opportunities. 100% free for consultants.
+            Join 50,000+ top engineers matched with pre-vetted enterprise client opportunities. Free to apply, no hidden fees.
           </p>
           <div className="flex flex-wrap justify-center gap-3 pt-2">
             <button 
