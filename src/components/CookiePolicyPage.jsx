@@ -197,10 +197,10 @@ export default function CookiePolicyPage({ onNavigate, isFullPage = true }) {
                 Full Privacy Policy
               </a>
               <a 
-                href="mailto:legal@hire2hired.com?subject=Cookie%20Policy%20Inquiry" 
+                href="mailto:support@hire2hired.com?subject=Cookie%20Policy%20Inquiry" 
                 className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold no-underline flex items-center gap-1.5"
               >
-                <Mail className="w-3.5 h-3.5" /> legal@hire2hired.com
+                <Mail className="w-3.5 h-3.5" /> support@hire2hired.com
               </a>
             </div>
           </div>

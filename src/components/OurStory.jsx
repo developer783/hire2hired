@@ -23,8 +23,8 @@ export default function OurStory({ onOpenApply, onRequestCallback }) {
     },
     {
       id: 1,
-      sender: "Sarah Jenkins (Lead Recruiter)",
-      email: "sarah.j@hire2hired.com",
+      sender: "Hire2Hired Support",
+      email: "support@hire2hired.com",
       time: "2 months ago",
       fullDate: "Dec 14, 2023, 2:30:00 PM",
       subject: "AI Candidate Match Score: 98%",

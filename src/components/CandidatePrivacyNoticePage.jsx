@@ -138,7 +138,7 @@ export default function CandidatePrivacyNoticePage({ onNavigate, isFullPage = tr
             <div className="space-y-2">
               <h3 className="text-sm font-bold text-slate-900">Your Privacy Choices</h3>
               <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Depending on applicable law, you may have rights to access, correct, delete, or control certain personal information. Contact us at <a href="mailto:legal@hire2hired.com" className="text-indigo-600 underline font-bold">legal@hire2hired.com</a>.
+                Depending on applicable law, you may have rights to access, correct, delete, or control certain personal information. Contact us at <a href="mailto:support@hire2hired.com" className="text-indigo-600 underline font-bold">support@hire2hired.com</a>.
               </p>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function CandidatePrivacyNoticePage({ onNavigate, isFullPage = tr
                 Full Privacy Policy
               </a>
               <a 
-                href="mailto:legal@hire2hired.com?subject=Candidate%20Privacy%20Inquiry" 
+                href="mailto:support@hire2hired.com?subject=Candidate%20Privacy%20Inquiry" 
                 className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold no-underline flex items-center gap-1.5"
               >
                 <Mail className="w-3.5 h-3.5" /> Email Legal

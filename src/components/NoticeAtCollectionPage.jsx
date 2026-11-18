@@ -141,10 +141,10 @@ export default function NoticeAtCollectionPage({ onNavigate, isFullPage = true }
                 Full Privacy Policy
               </a>
               <a 
-                href="mailto:legal@hire2hired.com?subject=Notice%20at%20Collection%20Inquiry" 
+                href="mailto:support@hire2hired.com?subject=Notice%20at%20Collection%20Inquiry" 
                 className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold no-underline flex items-center gap-1.5"
               >
-                <Mail className="w-3.5 h-3.5" /> legal@hire2hired.com
+                <Mail className="w-3.5 h-3.5" /> support@hire2hired.com
               </a>
             </div>
           </div>

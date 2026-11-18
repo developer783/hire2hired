@@ -176,7 +176,7 @@ Where such information is legally required for employment, employment eligibilit
     {
       id: "26",
       title: "26. PRIVACY REQUESTS",
-      content: `Privacy requests may be submitted via email to legal@hire2hired.com with Subject "Privacy Request".`
+      content: `Privacy requests may be submitted via email to support@hire2hired.com with Subject "Privacy Request".`
     },
     {
       id: "27",
@@ -226,7 +226,7 @@ Where such information is legally required for employment, employment eligibilit
     {
       id: "36",
       title: "36. CONTACT INFORMATION",
-      content: `Hire2Hired Inc.\n312 W 2nd St A8345\nCasper, WY 82601\nUnited States\nWebsite: www.hire2hired.com\nPrivacy & Legal Department: legal@hire2hired.com`
+      content: `Hire2Hired Inc.\n312 W 2nd St A8345\nCasper, WY 82601\nUnited States\nWebsite: www.hire2hired.com\nPrivacy & Legal Department: support@hire2hired.com`
     }
   ];
 
@@ -268,7 +268,7 @@ Where such information is legally required for employment, employment eligibilit
 
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-normal">
               <strong>HIRE2HIRED INC.</strong> • Effective & Last Updated: <strong>August 10, 2026</strong><br />
-              Casper, WY, USA • Privacy Contact: <a href="mailto:legal@hire2hired.com" className="text-indigo-400 underline">legal@hire2hired.com</a>
+              Casper, WY, USA • Privacy Contact: <a href="mailto:support@hire2hired.com" className="text-indigo-400 underline">support@hire2hired.com</a>
             </p>
 
             {/* Quick Actions & Search */}
@@ -365,10 +365,10 @@ Where such information is legally required for employment, employment eligibilit
           </div>
 
           <a 
-            href="mailto:legal@hire2hired.com?subject=Privacy%20Request" 
+            href="mailto:support@hire2hired.com?subject=Privacy%20Request" 
             className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold border-0 cursor-pointer no-underline flex items-center gap-2 shadow"
           >
-            <Mail className="w-4 h-4" /> legal@hire2hired.com
+            <Mail className="w-4 h-4" /> support@hire2hired.com
           </a>
         </div>
 

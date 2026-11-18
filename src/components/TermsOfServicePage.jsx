@@ -255,7 +255,7 @@ In addition, Hire2Hired may seek reasonable attorneys' fees, collection costs, c
     {
       id: "32",
       title: "32. PAYMENT DISPUTES",
-      content: `A Candidate who genuinely disputes an amount should notify Hire2Hired in writing at legal@hire2hired.com identifying the Agreement, disputed amount, and reason for dispute. A good-faith dispute does not automatically constitute a breach.`
+      content: `A Candidate who genuinely disputes an amount should notify Hire2Hired in writing at support@hire2hired.com identifying the Agreement, disputed amount, and reason for dispute. A good-faith dispute does not automatically constitute a breach.`
     },
     {
       id: "33",
@@ -375,12 +375,12 @@ In addition, Hire2Hired may seek reasonable attorneys' fees, collection costs, c
     {
       id: "56",
       title: "56. PRIVACY REQUESTS",
-      content: `Privacy-related requests should be submitted to Hire2Hired Inc., 312 W 2nd St A8345, Casper, WY 82601, USA. Email: legal@hire2hired.com.`
+      content: `Privacy-related requests should be submitted to Hire2Hired Inc., 312 W 2nd St A8345, Casper, WY 82601, USA. Email: support@hire2hired.com.`
     },
     {
       id: "57",
       title: "57. CONTACT INFORMATION",
-      content: `Hire2Hired Inc.\n312 W 2nd St A8345\nCasper, WY 82601\nUnited States\nWebsite: www.hire2hired.com\nLegal / Privacy Department: legal@hire2hired.com`
+      content: `Hire2Hired Inc.\n312 W 2nd St A8345\nCasper, WY 82601\nUnited States\nWebsite: www.hire2hired.com\nLegal / Privacy Department: support@hire2hired.com`
     },
     {
       id: "58",
@@ -427,7 +427,7 @@ In addition, Hire2Hired may seek reasonable attorneys' fees, collection costs, c
 
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-normal">
               <strong>HIRE2HIRED INC.</strong> • Effective & Last Updated: <strong>August 10, 2026</strong><br />
-              casper, WY, USA • Legal Contact: <a href="mailto:legal@hire2hired.com" className="text-indigo-400 underline">legal@hire2hired.com</a>
+              casper, WY, USA • Legal Contact: <a href="mailto:support@hire2hired.com" className="text-indigo-400 underline">support@hire2hired.com</a>
             </p>
 
             {/* Quick Actions & Search */}
@@ -524,10 +524,10 @@ In addition, Hire2Hired may seek reasonable attorneys' fees, collection costs, c
           </div>
 
           <a 
-            href="mailto:legal@hire2hired.com" 
+            href="mailto:support@hire2hired.com" 
             className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold border-0 cursor-pointer no-underline flex items-center gap-2 shadow"
           >
-            <Mail className="w-4 h-4" /> legal@hire2hired.com
+            <Mail className="w-4 h-4" /> support@hire2hired.com
           </a>
         </div>
 
