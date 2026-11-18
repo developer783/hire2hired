@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Check, ChevronRight, Home, Upload, ArrowRight, ArrowLeft, 
   Sparkles, CheckCircle2, UserCheck, Briefcase, FileText, Lock, 
-  Paperclip, Award, ShieldCheck
+  Paperclip, Award, ShieldCheck, Loader2
 } from 'lucide-react';
 import signupHeroImg from '../assets/consultant_signup.png';
 
-import StripePaymentView from './StripePaymentView';
+import { sendForm } from '../lib/sendForm';
+import { goToCheckout } from '../lib/payment';
 
 export default function SignupPage({ onNavigate, isFullPage = true }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -15,9 +16,9 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
 
   // Form State
   const [formData, setFormData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john@example.com',
+    firstName: '',
+    lastName: '',
+    email: '',
     role: '',
     experienceLevel: '',
     phone: '',
@@ -28,6 +29,14 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
     resumeName: '',
     resumeSize: ''
   });
+
+  // If the visitor comes back from Stripe with the browser Back button, the page can be restored
+  // from cache with the button still in its "redirecting" state; reset it.
+  useEffect(() => {
+    const onShow = (e) => { if (e.persisted) setLoading(false); };
+    window.addEventListener('pageshow', onShow);
+    return () => window.removeEventListener('pageshow', onShow);
+  }, []);
 
   const rolesList = [
     "Software Engineer",
@@ -80,10 +89,35 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
     }
   };
 
-  const handleSubmitFinal = (e) => {
+  // Final step (same flow as the previous site): email the application to the team,
+  // then send the applicant to Stripe's hosted checkout with their email prefilled.
+  const handleSubmitFinal = async (e) => {
     e.preventDefault();
-    setCurrentStep(4);
-    window.scrollTo({ top: 120, behavior: 'smooth' });
+    if (loading) return;
+    setLoading(true);
+    const name = `${formData.firstName} ${formData.lastName}`.trim();
+    try {
+      await sendForm(
+        `New Consultant Application - ${name}`,
+        {
+          Name: name,
+          Email: formData.email,
+          Phone: formData.phone,
+          LinkedIn: formData.linkedIn,
+          Role: formData.role,
+          'Experience Level': formData.experienceLevel,
+          'Key Skills': formData.skills,
+          Bio: formData.bio,
+          Resume: formData.resumeName ? `${formData.resumeName} (${formData.resumeSize}) - ask the applicant to email it` : 'Not uploaded',
+          Status: 'Sent to Stripe checkout (check Stripe for payment)',
+        },
+        formData.email
+      );
+    } catch (err) {
+      // Don't block payment if the notification email fails; Stripe still records the customer.
+      console.error('Application email failed:', err);
+    }
+    goToCheckout(formData.email);
   };
 
   return (
@@ -444,27 +478,21 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
                         <ArrowLeft className="w-3.5 h-3.5" /> Back
                       </button>
 
-                      <button 
+                      <button
                         type="submit"
-                        className="px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center gap-2 border-0 cursor-pointer shadow hover:scale-[1.02] transition-all"
+                        disabled={loading}
+                        className="px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-80 disabled:cursor-wait text-white text-xs font-bold flex items-center gap-2 border-0 cursor-pointer shadow hover:scale-[1.02] transition-all"
                       >
-                        <Check className="w-4 h-4" /> Complete Payment
+                        {loading ? (
+                          <><Loader2 className="w-4 h-4 animate-spin" /> Opening secure payment…</>
+                        ) : (
+                          <><Lock className="w-4 h-4" /> Complete Payment</>
+                        )}
                       </button>
                     </div>
                   </form>
                 )}
 
-                {/* STAGE 4: Stripe Payment Checkout */}
-                {currentStep === 4 && (
-                  <div className="animate-in fade-in">
-                    <StripePaymentView 
-                      formData={formData}
-                      onSuccess={() => setSubmitted(true)}
-                      onBack={() => setCurrentStep(3)}
-                      onNavigate={onNavigate}
-                    />
-                  </div>
-                )}
 
               </>
             )}

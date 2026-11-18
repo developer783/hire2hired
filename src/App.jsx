@@ -35,6 +35,7 @@ import NoticeAtCollectionPage from './components/NoticeAtCollectionPage';
 import CookiePolicyPage from './components/CookiePolicyPage';
 import SignupPage from './components/SignupPage';
 import StripePaymentView from './components/StripePaymentView';
+import PaymentResultPage from './components/PaymentResultPage';
 import ConsultantLoginPage from './components/ConsultantLoginPage';
 import WhyChooseUsPage from './components/WhyChooseUsPage';
 import CareersPage from './components/CareersPage';
@@ -49,6 +50,10 @@ export default function App() {
   const [selectedProgram, setSelectedProgram] = useState('');
   const [currentView, setCurrentView] = useState(() => {
     if (typeof window !== 'undefined') {
+      // Stripe returns customers to these real paths after checkout
+      const path = window.location.pathname.replace(/\/+$/, '');
+      if (path === '/payment/success') return 'payment-success';
+      if (path === '/payment/cancel') return 'payment-cancel';
       const hash = window.location.hash;
       if (hash.startsWith('#consultant-service-')) {
         return hash.replace('#', '') || 'consultant-service-resume-optimization';
@@ -113,6 +118,12 @@ export default function App() {
       if (hash === '#sgb-partnership' || hash === '#sgb') {
         return 'sgb-partnership';
       }
+      // Legal pages (so a refresh or shared link opens the right page)
+      if (hash === '#terms' || hash === '#terms-of-service') return 'terms';
+      if (hash === '#privacy' || hash === '#privacy-policy') return 'privacy';
+      if (hash === '#candidate-privacy-notice' || hash === '#candidate-privacy') return 'candidate-privacy-notice';
+      if (hash === '#notice-at-collection' || hash === '#collection-notice') return 'notice-at-collection';
+      if (hash === '#cookie-policy' || hash === '#cookies') return 'cookie-policy';
     }
     return 'home';
   });
@@ -211,6 +222,10 @@ export default function App() {
   }, []);
 
   const handleNavigate = (view) => {
+    // Leaving /payment/success or /payment/cancel: drop the path so routing stays hash-based
+    if (window.location.pathname !== '/') {
+      window.history.replaceState(null, '', '/' + window.location.hash);
+    }
     setCurrentView(view);
     if (view.startsWith('consultant-service-') || view.startsWith('employer-service-') || view.startsWith('industry-')) {
       window.location.hash = view;
@@ -251,7 +266,9 @@ export default function App() {
     } else if (view === 'sgb-partnership') {
       window.location.hash = 'sgb-partnership';
     } else {
-      window.location.hash = 'home';
+      // Any other view (terms, privacy, cookie-policy, notice pages, ...) uses its own name as the hash.
+      // Previously this fell back to '#home', which bounced those pages back to the homepage.
+      window.location.hash = view || 'home';
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -363,6 +380,8 @@ export default function App() {
             onNavigate={handleNavigate}
             isFullPage={true}
           />
+        ) : currentView === 'payment-success' || currentView === 'payment-cancel' ? (
+          <PaymentResultPage status={currentView === 'payment-success' ? 'success' : 'cancel'} />
         ) : currentView === 'payment' ? (
           <StripePaymentView 
             isFullPage={true}
