@@ -6,13 +6,14 @@ import {
 } from 'lucide-react';
 import signupHeroImg from '../assets/consultant_signup.png';
 
-import { sendForm } from '../lib/sendForm';
+import { sendForm, MAX_ATTACHMENT_MB } from '../lib/sendForm';
 import { goToCheckout } from '../lib/payment';
 
 export default function SignupPage({ onNavigate, isFullPage = true }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fileError, setFileError] = useState('');
 
   // Form State
   const [formData, setFormData] = useState({
@@ -78,15 +79,26 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
-      setFormData({
-        ...formData,
-        resumeFile: file,
-        resumeName: file.name,
-        resumeSize: `${sizeMB} MB`
-      });
+    e.target.value = ''; // allow re-picking the same file after an error
+    if (!file) return;
+    if (!/\.(pdf|docx?)$/i.test(file.name)) {
+      setFileError('Please upload a PDF, DOC, or DOCX file.');
+      return;
     }
+    if (file.size > MAX_ATTACHMENT_MB * 1024 * 1024) {
+      setFileError(`That file is larger than ${MAX_ATTACHMENT_MB} MB. Please upload a smaller version.`);
+      return;
+    }
+    setFileError('');
+    const size = file.size < 1024 * 1024
+      ? `${Math.max(1, Math.round(file.size / 1024))} KB`
+      : `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+    setFormData({
+      ...formData,
+      resumeFile: file,
+      resumeName: file.name,
+      resumeSize: size
+    });
   };
 
   // Final step (same flow as the previous site): email the application to the team,
@@ -96,26 +108,35 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
     if (loading) return;
     setLoading(true);
     const name = `${formData.firstName} ${formData.lastName}`.trim();
+    const subject = `New Consultant Application - ${name}`;
+    const fields = {
+      Name: name,
+      Email: formData.email,
+      Phone: formData.phone,
+      LinkedIn: formData.linkedIn,
+      Role: formData.role,
+      'Experience Level': formData.experienceLevel,
+      'Key Skills': formData.skills,
+      Bio: formData.bio,
+      Resume: formData.resumeFile ? `${formData.resumeName} (${formData.resumeSize}) - attached` : 'Not uploaded',
+      Status: 'Sent to Stripe checkout (check Stripe for payment)',
+    };
     try {
-      await sendForm(
-        `New Consultant Application - ${name}`,
-        {
-          Name: name,
-          Email: formData.email,
-          Phone: formData.phone,
-          LinkedIn: formData.linkedIn,
-          Role: formData.role,
-          'Experience Level': formData.experienceLevel,
-          'Key Skills': formData.skills,
-          Bio: formData.bio,
-          Resume: formData.resumeName ? `${formData.resumeName} (${formData.resumeSize}) - ask the applicant to email it` : 'Not uploaded',
-          Status: 'Sent to Stripe checkout (check Stripe for payment)',
-        },
-        formData.email
-      );
+      await sendForm(subject, fields, formData.email, formData.resumeFile || undefined);
     } catch (err) {
-      // Don't block payment if the notification email fails; Stripe still records the customer.
       console.error('Application email failed:', err);
+      // If the attachment was the problem, still get the application details through without it.
+      if (formData.resumeFile) {
+        try {
+          await sendForm(subject, {
+            ...fields,
+            Resume: `${formData.resumeName} (${formData.resumeSize}) - attachment FAILED to send, please ask the applicant to email it`,
+          }, formData.email);
+        } catch (err2) {
+          console.error('Application email retry failed:', err2);
+        }
+      }
+      // Don't block payment if the notification email fails; Stripe still records the customer.
     }
     goToCheckout(formData.email);
   };
@@ -156,10 +177,6 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
             </div>
 
             <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-2xs space-y-3 text-xs font-bold text-slate-700">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Zero placement or application fees</span>
-              </div>
               <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                 <span>Direct client interview requests</span>
@@ -437,9 +454,12 @@ export default function SignupPage({ onNavigate, isFullPage = true }) {
                           {formData.resumeName ? formData.resumeName : 'Click to upload or drag and drop'}
                         </p>
                         <p className="text-xs text-slate-400 font-bold mt-1">
-                          {formData.resumeSize ? `Attached file (${formData.resumeSize})` : 'PDF, DOC, or DOCX (max. 10MB)'}
+                          {formData.resumeSize ? `Attached file (${formData.resumeSize})` : `PDF, DOC, or DOCX (max. ${MAX_ATTACHMENT_MB}MB)`}
                         </p>
                       </div>
+                      {fileError && (
+                        <p role="alert" className="mt-2 text-xs font-bold text-rose-600">{fileError}</p>
+                      )}
                     </div>
 
                     {/* What Happens Next Card */}
